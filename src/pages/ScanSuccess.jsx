@@ -10,7 +10,7 @@ export default function ScanSuccess() {
 
     const setScannedState = () => {
         // Vous pouvez ici ajouter un  appel API vers votre backend pour valider le paiement/scan
-        setMessage("✅ Le QR code a été scanné avec succès ! Bienvenue chez le partenaire.");
+        setMessage("✅ Le QR c ode     a été scanné avec succès ! Bienvenue chez le partenaire.");
     };
 
     return (
