@@ -30,7 +30,7 @@ export default function App() {
                 {/* Route de l'Espace Salarié (avec le QR code de paiement) */}
                 <Route path="/employee" element={<EmployeeSpace />} />
 
-                {/* Route vers laquelle pointera le QR code scanné */}
+
                 <Route path="/scan" element={<ScanSuccess />} />
             </Routes>
         </BrowserRouter>
