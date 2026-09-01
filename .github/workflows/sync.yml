@@ -1,0 +1,28 @@
+name: Sync to Public Profile Repo
+
+
+on:
+  push:
+    branches: [ main ] # ou master selon votre branche par défaut
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout du code source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push vers le dépôt public
+        env:
+          PAT: ${{ secrets.MY_GITHUB_PAT }}
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "action@github.com"
+          
+          # Ajout du dépôt public distant avec authentification par Token
+          git remote add public https://x-access-token:${PAT}@github.com/maxime-knv/survivor.git
+          
+          # Envoi des modifications sur le dépôt public
+          git push public main --force
