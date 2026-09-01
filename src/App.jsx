@@ -34,5 +34,6 @@ export default function App() {
                 <Route path="/scan" element={<ScanSuccess />} />
             </Routes>
         </BrowserRouter>
+
     );
 }
