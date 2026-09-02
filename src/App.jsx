@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 // import QrCodePage from './pages/QrCodePage'
 // import QrLibraryPage from './pages/QrLibraryPage'
-// import PartnersPage from './pages/PartnersPage'
+import PartnersPage from './pages/PartnersPage'
 // import HistoryPage from './pages/HistoryPage'
 // import HelpPage from './pages/HelpPage'
 import { QrCodesProvider } from './context/QrCodesContext'
@@ -18,7 +18,7 @@ export default function App() {
                         <Route path="/" element={<HomePage />} />
                        // {/* <Route path="/qr-code" element={<QrCodePage />} /> */}
                         // {/* <Route path="/mes-qr-codes" element={<QrLibraryPage />} /> */}
-                        //{/* <Route path="/partenaires" element={<PartnersPage />} /> */}
+                        <Route path="/partenaires" element={<PartnersPage />} />
                         //{/* <Route path="/historique" element={<HistoryPage />} /> */}
                         //{/* <Route path="/aide" element={<HelpPage />} /> */}
                     </Route>
