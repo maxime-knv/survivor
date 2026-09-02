@@ -6,7 +6,8 @@ import HomePage from './pages/HomePage'
 // import PartnersPage from './pages/PartnersPage'
 // import HistoryPage from './pages/HistoryPage'
 // import HelpPage from './pages/HelpPage'
-// import { QrCodesProvider } from './context/QrCodesContext'
+import { QrCodesProvider } from './context/QrCodesContext'
+import Layout from "./components/Layout.jsx";
 
 export default function App() {
     return (
@@ -15,11 +16,11 @@ export default function App() {
                 <Routes>
                     <Route element={<Layout />}>
                         <Route path="/" element={<HomePage />} />
-                        {/* <Route path="/qr-code" element={<QrCodePage />} /> */}
-                        {/* <Route path="/mes-qr-codes" element={<QrLibraryPage />} /> */}
-                        {/* <Route path="/partenaires" element={<PartnersPage />} /> */}
-                        {/* <Route path="/historique" element={<HistoryPage />} /> */}
-                        {/* <Route path="/aide" element={<HelpPage />} /> */}
+                       // {/* <Route path="/qr-code" element={<QrCodePage />} /> */}
+                        // {/* <Route path="/mes-qr-codes" element={<QrLibraryPage />} /> */}
+                        //{/* <Route path="/partenaires" element={<PartnersPage />} /> */}
+                        //{/* <Route path="/historique" element={<HistoryPage />} /> */}
+                        //{/* <Route path="/aide" element={<HelpPage />} /> */}
                     </Route>
                 </Routes>
             </BrowserRouter>
