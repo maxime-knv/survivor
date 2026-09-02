@@ -1,41 +1,28 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import EmployeeSpace from './pages/EmployeeSpace';
-import ScanSuccess from './pages/ScanSuccess';
-
-
-function Home() {
-    return (
-        <div style={{ textAlign: 'center', marginTop: '60px', fontFamily: 'sans-serif' }}>
-            <h1 style={{ color: '#2b2b2b' }}>Ministère du Job et Bonheur</h1>
-            <h3>Projet : Ticket Tout</h3>
-            <p>Bienvenue sur l'application officielle !</p>
-
-            <div style={{ marginTop: '30px', display: 'flex', flexDirection: 'column', gap: '15px', alignItems: 'center' }}>
-                <Link to="/employee" style={{ padding: '10px 20px', background: '#319795', color: '#fff', borderRadius: '5px', textDecoration: 'none', fontWeight: 'bold' }}>
-                    Accéder à l'Espace Salarié (Générer le QR Code)
-                </Link>
-            </div>
-        </div>
-    );
-}
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+// import Layout from './components/Layout'
+import HomePage from './pages/HomePage'
+// import QrCodePage from './pages/QrCodePage'
+// import QrLibraryPage from './pages/QrLibraryPage'
+// import PartnersPage from './pages/PartnersPage'
+// import HistoryPage from './pages/HistoryPage'
+// import HelpPage from './pages/HelpPage'
+// import { QrCodesProvider } from './context/QrCodesContext'
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                {/* Route de la page d'accueil */}
-                <Route path="/" element={<Home />} />
-
-                {/* Route de l'Espace Salarié (avec le QR code de paiement) */}
-                <Route path="/employee" element={<EmployeeSpace />} />
-
-
-                <Route path="/scan" element={<ScanSuccess />} />
-            </Routes>
-        </BrowserRouter>
-
-
-
-    );
+        <QrCodesProvider>
+            <BrowserRouter>
+                <Routes>
+                    <Route element={<Layout />}>
+                        <Route path="/" element={<HomePage />} />
+                        {/* <Route path="/qr-code" element={<QrCodePage />} /> */}
+                        {/* <Route path="/mes-qr-codes" element={<QrLibraryPage />} /> */}
+                        {/* <Route path="/partenaires" element={<PartnersPage />} /> */}
+                        {/* <Route path="/historique" element={<HistoryPage />} /> */}
+                        {/* <Route path="/aide" element={<HelpPage />} /> */}
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </QrCodesProvider>
+    )
 }
