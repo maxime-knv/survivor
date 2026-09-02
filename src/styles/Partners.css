@@ -1,0 +1,12 @@
+.partners-title {
+    font-family: 'Marianne', 'Segoe UI', sans-serif;
+    font-size: 15px;
+}
+
+.partner-panel {
+    margin-bottom: 16px;
+    padding: 4px;
+    background-color: blue;
+    border-radius: 12px;
+    overflow: hidden;
+}
