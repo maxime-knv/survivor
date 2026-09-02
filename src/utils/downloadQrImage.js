@@ -1,4 +1,4 @@
-import { getQrCanvasBlob } from '../../G-SVR-500-PAR-5-1-survivor-24/src/utils/qrPattern'
+import { getQrCanvasBlob } from '../../src/utils/qrPattern'
 
 export function downloadQrImage(entry) {
   getQrCanvasBlob(entry.id, (blob) => {
