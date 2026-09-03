@@ -1,13 +1,20 @@
-import { useMemo } from 'react'
-import { getQrDataUrl } from '../../utils/qrPattern'
+import { useEffect, useState } from 'react'
+import QRCode from 'qrcode'
 
 export default function QrPreview({ id, alt, onClick, size }) {
-  const src = useMemo(() => getQrDataUrl(id), [id])
-  const style = size ? { width: size, height: size } : undefined
+  const [src, setSrc] = useState('')
+
+  useEffect(() => {
+    QRCode.toDataURL(id)
+      .then(setSrc)
+      .catch(console.error)
+  }, [id])
+
+  if (!src) return null
 
   if (!onClick) {
     return (
-      <div className="qr-preview-thumb" style={style}>
+      <div className="qr-preview-thumb">
         <img src={src} alt={alt} width={size} height={size} />
       </div>
     )
@@ -17,7 +24,6 @@ export default function QrPreview({ id, alt, onClick, size }) {
     <button
       type="button"
       className="qr-preview-thumb qr-preview-thumb-clickable"
-      style={style}
       onClick={onClick}
       aria-label={`Agrandir le code QR : ${alt}`}
     >

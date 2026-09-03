@@ -6,7 +6,8 @@ import EmptyState from '../components/ui/EmptyState'
 import LoadingState from '../components/ui/LoadingState'
 import QrPreview from '../components/ui/QrPreview'
 import QrLightbox from '../components/ui/QrLightbox'
-import { useQrCodes } from '../context/QrCodesContext'
+import { listQrCodes } from '../services/qrCodesService'
+import { useAsync } from '../services/useAsync'
 import { getExpiryDate, isQrValid, formatTime } from '../utils/qrValidity'
 import { formatCurrency } from '../utils/format'
 import { downloadQrImage } from '../utils/downloadQrImage'
@@ -16,7 +17,9 @@ function formatGeneratedDate(iso) {
 }
 
 export default function QrLibraryPage() {
-  const { qrCodes, loading } = useQrCodes()
+  const { data, loading } = useAsync(listQrCodes, [])
+  const qrCodes = data || []
+
   const [expandedId, setExpandedId] = useState(null)
 
   const expandedEntry = qrCodes.find((entry) => entry.id === expandedId) || null
@@ -40,8 +43,8 @@ export default function QrLibraryPage() {
       ) : (
         <section className="qr-library-grid">
           {qrCodes.map((entry) => {
-            const valid = isQrValid(entry.generatedAt)
-            const expiresAt = getExpiryDate(entry.generatedAt)
+            const valid = isQrValid(entry.createdAt)
+            const expiresAt = getExpiryDate(entry.createdAt)
             const title = entry.label || formatCurrency(entry.amount)
 
             return (
@@ -50,7 +53,7 @@ export default function QrLibraryPage() {
                   <span className={`status-pill ${valid ? 'success' : 'failed'}`}>
                     {valid ? 'Valide' : 'Expiré'}
                   </span>
-                  <span className="qr-library-date">{formatGeneratedDate(entry.generatedAt)}</span>
+                  <span className="qr-library-date">{formatGeneratedDate(entry.createdAt)}</span>
                 </div>
 
                 <QrPreview
@@ -80,8 +83,8 @@ export default function QrLibraryPage() {
           id={expandedEntry.id}
           title={expandedEntry.label || 'Code QR Ticket Tout'}
           caption={`${formatCurrency(expandedEntry.amount)}, ${
-            isQrValid(expandedEntry.generatedAt)
-              ? `valide jusqu’à ${formatTime(getExpiryDate(expandedEntry.generatedAt))}`
+            isQrValid(expandedEntry.createdAt)
+              ? `valide jusqu’à ${formatTime(getExpiryDate(expandedEntry.createdAt))}`
               : 'expiré'
           }`}
           onClose={() => setExpandedId(null)}
