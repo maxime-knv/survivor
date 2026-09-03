@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import PageHeader from '../../components/ui/PageHeader'
 
 const SignUp = () => {
     return (
@@ -21,6 +22,29 @@ const SignUp = () => {
                     </div>
                 </div>
             </header>
+            <main className="main-panel">
+                <div className="page-container">
+                    <PageHeader title="Inscription"/>
+                    <section className="panel form-panel">
+                        <span>Nom</span>
+                        <div className="input-row amount-box">
+                            <input id="name" />
+                        </div>
+                        <span>Prénom</span>
+                        <div className="input-row amount-box">
+                            <input id="firstName" />
+                        </div>
+                        <span>Email</span>
+                        <div className="input-row amount-box">
+                            <input id="email" />
+                        </div>
+                        <span>Mot de passe</span>
+                        <div className="input-row amount-box">
+                            <input id="password" />
+                        </div>
+                    </section>
+                </div>
+            </main>
         </div>
     );
 };
