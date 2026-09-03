@@ -1,0 +1,29 @@
+name: Build Project
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du code source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: install dependencies
+        run: npm ci
+      
+      - name: build project
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-vite-build
+          path: dist/
+          if-no-files-found: error
