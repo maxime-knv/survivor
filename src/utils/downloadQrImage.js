@@ -6,7 +6,7 @@ export function downloadQrImage(entry) {
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = `qr-cartepro-${entry.id}.png`
+    link.download = `qr-tickettout-${entry.id}.png`
     document.body.appendChild(link)
     link.click()
     link.remove()
