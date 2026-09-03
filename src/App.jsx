@@ -10,12 +10,16 @@ import ScanSuccess from './pages/ScanSuccess'
 import EmployeeSpace from './pages/EmployeeSpace'
 import { QrCodesProvider } from './context/QrCodesContext'
 import Layout from './components/Layout.jsx'
+import SignUp from './pages/Autentification/SignUp'
+import SignIn from './pages/Autentification/SignIn'
 
 export default function App() {
     return (
         <QrCodesProvider>
             <BrowserRouter>
                 <Routes>
+                    <Route path="/inscription" element={<SignUp />} />
+                    <Route path="/connexion" element={<SignIn />} />
                     <Route element={<Layout />}>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/mes-qr-codes" element={<QrLibraryPage />} />
