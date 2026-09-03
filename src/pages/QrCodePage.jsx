@@ -9,14 +9,13 @@ import QrPreview from '../components/ui/QrPreview'
 import QrLightbox from '../components/ui/QrLightbox'
 import { getAccount } from '../services/accountService'
 import { useAsync } from '../services/useAsync'
+import { createQrCode } from '../services/qrCodesService'
 import { formatCurrency } from '../utils/format'
-import { useQrCodes } from '../context/QrCodesContext'
 import { downloadQrImage } from '../utils/downloadQrImage'
 import { QR_VALIDITY_MINUTES, getExpiryDate, isQrValid, formatTime } from '../utils/qrValidity'
 
 export default function QrCodePage() {
   const { data: account, loading: accountLoading } = useAsync(getAccount, [])
-  const { addQrCode } = useQrCodes()
   const [amount, setAmount] = useState('25.00')
   const [label, setLabel] = useState('')
   const [lastGenerated, setLastGenerated] = useState(null)
@@ -47,9 +46,17 @@ export default function QrCodePage() {
     event.preventDefault()
     if (!canGenerate) return
     setIsGenerating(true)
-    const entry = await addQrCode({ amount: numericAmount, label })
-    setLastGenerated(entry)
-    setIsGenerating(false)
+    try {
+      const qrCode = await createQrCode({
+        amount: numericAmount,
+        label,
+      })
+      setLastGenerated(qrCode)
+    } catch (error) {
+      console.error('Erreur lors de la génération du QR code :', error)
+    } finally {
+      setIsGenerating(false)
+    }
   }
 
   function handleAmountChange(event) {
@@ -58,7 +65,7 @@ export default function QrCodePage() {
     setIsExpanded(false)
   }
 
-  const expiresAt = lastGenerated ? getExpiryDate(lastGenerated.generatedAt) : null
+  const expiresAt = lastGenerated ? getExpiryDate(lastGenerated.createdAt) : null
 
   return (
     <>
@@ -154,7 +161,7 @@ export default function QrCodePage() {
           id={lastGenerated.id}
           title={lastGenerated.label || 'Code QR Ticket Tout'}
           caption={`${formatCurrency(lastGenerated.amount)}, ${
-            isQrValid(lastGenerated.generatedAt)
+            isQrValid(lastGenerated.createdAt)
               ? `valide jusqu’à ${formatTime(expiresAt)}`
               : 'expiré'
           }`}
