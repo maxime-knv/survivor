@@ -29,9 +29,6 @@ function writeStore(list) {
     }
 }
 
-// Aujourd'hui : localStorage simule la persistance côté serveur. Demain :
-// remplacer readStore/writeStore par `request('/api/v1/qr-codes')` (GET/POST).
-// QrCodesContext ne dépend que de ces deux fonctions, aucun changement à y faire.
 export async function listQrCodes() {
     return mockDelay(readStore())
 }
