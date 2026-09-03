@@ -320,6 +320,10 @@ h1, h2, h3, h4 {
   align-items: center;
 }
 
+.auth-main .page-container {
+  max-width: 700px;
+}
+
 .main-panel {
   flex: 1;
   width: 100%;
