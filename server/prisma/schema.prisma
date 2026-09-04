@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Partner {
+  id          String        @id
+  name        String
+  category    String
+  createdAt   DateTime      @default(now())
+  Transaction Transaction[]
+}
+
+model QrCode {
+  id          String        @id
+  code        String        @unique
+  status      String        @default("ACTIVE")
+  userId      String
+  createdAt   DateTime      @default(now())
+  User        User          @relation(fields: [userId], references: [id])
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id        String   @id
+  amount    Float
+  status    String   @default("SUCCESS")
+  userId    String
+  partnerId String
+  qrCodeId  String
+  createdAt DateTime @default(now())
+  Partner   Partner  @relation(fields: [partnerId], references: [id])
+  QrCode    QrCode   @relation(fields: [qrCodeId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id          String        @id
+  email       String        @unique
+  name        String
+  role        String        @default("EMPLOYEE")
+  createdAt   DateTime      @default(now())
+  QrCode      QrCode[]
+  Transaction Transaction[]
+}

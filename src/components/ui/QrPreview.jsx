@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { getQrDataUrl } from '../../../G-SVR-500-PAR-5-1-survivor-24/src/utils/qrPattern'
+import { getQrDataUrl } from '../../utils/qrPattern'
 
 export default function QrPreview({ id, alt, onClick, size }) {
   const src = useMemo(() => getQrDataUrl(id), [id])
