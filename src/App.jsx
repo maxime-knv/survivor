@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import HomePage from './pages/HomePage'
 import QrCodePage from './pages/QrCodePage'
@@ -20,8 +20,9 @@ export default function App() {
                 <Routes>
                     <Route path="/inscription" element={<SignUp />} />
                     <Route path="/connexion" element={<SignIn />} />
+                    <Route path="/" element={<Navigate to="/connexion" replace />} />
                     <Route element={<Layout />}>
-                        <Route path="/" element={<HomePage />} />
+                        <Route path="/accueil" element={<HomePage />} />
                         <Route path="/mes-qr-codes" element={<QrLibraryPage />} />
                         <Route path="/qr-code" element={<QrCodePage />} />
                         <Route path="/partenaires" element={<PartnersPage />} />

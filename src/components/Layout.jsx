@@ -3,7 +3,7 @@ import { House, QrCode, FolderOpen, Store, Activity, CircleHelp } from 'lucide-r
 import { currentUser } from '../data/user'
 
 const navigation = [
-    { to: '/', label: 'Accueil', icon: House },
+    { to: '/accueil', label: 'Accueil', icon: House },
     { to: '/qr-code', label: 'Code QR', icon: QrCode },
     { to: '/mes-qr-codes', label: 'Mes QR codes', icon: FolderOpen },
     { to: '/partenaires', label: 'Partenaires', icon: Store },
@@ -47,7 +47,7 @@ export default function Layout() {
                                 key={to}
                                 to={to}
                                 className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
-                                end={to === '/'}
+                                end={to === '/accueil'}
                             >
                                 <span className="nav-icon">
                                     <Icon size={16} strokeWidth={2.2} />
