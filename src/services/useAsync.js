@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 
-// Consomme un service asynchrone (mock aujourd'hui, API réelle demain) sans
-// dupliquer la gestion chargement/erreur dans chaque page.
 export function useAsync(fetcher, deps) {
     const [state, setState] = useState({ data: null, loading: true, error: null })
 

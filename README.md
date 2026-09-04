@@ -1,16 +1,69 @@
-# React + Vite
+# Ticket Tout
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Bienvenue
 
-Currently, two official plugins are available:
+Ticket Tout est une application qui permet de gérer et d'utiliser des titres
+restaurant dématérialisés grâce à des QR codes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+L'application propose un espace adapté à chaque type d'utilisateur : salarié,
+partenaire ou utilisateur disposant uniquement de l'accès à l'accueil.
 
-## React Compiler
+## Que peut-on faire avec Ticket Tout ?
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Salarié
 
-## Expanding the Oxlint configuration
+Le salarié peut :
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+- consulter la page d'accueil ;
+- créer et consulter ses QR codes ;
+- télécharger un QR code pour l'utiliser chez un partenaire ;
+- consulter les partenaires disponibles ;
+- consulter l'historique de ses transactions ;
+- accéder à la page d'aide.
+
+### Partenaire
+
+Le partenaire peut consulter la liste et les informations des partenaires
+disponibles dans l'application.
+
+### Accès à l'accueil
+
+Certains utilisateurs disposent uniquement de la page d'accueil.
+
+## Utiliser l'application
+
+1. Ouvrez Ticket Tout.
+2. Créez un compte avec **Inscription** ou connectez-vous avec **Connexion**.
+3. Une fois connecté, utilisez le menu de navigation pour ouvrir les pages
+	auxquelles votre profil a accès.
+4. Depuis la page **Mes QR codes**, sélectionnez un QR code pour le consulter
+	ou le télécharger.
+5. Présentez le QR code au partenaire lors du paiement.
+6. Consultez **Historique** pour retrouver vos transactions passées.
+
+## Lancer l'application
+
+Pour démarrer Ticket Tout sur votre ordinateur, ouvrez un terminal à la racine
+du projet et exécutez :
+
+```bash
+npm install
+npm run dev
+```
+
+Ouvrez ensuite l'adresse indiquée par le terminal, généralement
+`http://localhost:5173`.
+
+Le serveur backend doit également être démarré dans un autre terminal :
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+## Besoin d'aide ?
+
+La page **Aide** contient les informations utiles pour comprendre le
+fonctionnement de l'application. En cas de problème, utilisez le lien
+**Nous contacter** présent dans le pied de page.
