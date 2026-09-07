@@ -11,6 +11,7 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [entreprise, setEntreprise] = useState('');
     const [role, setRole] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -37,12 +38,18 @@ const SignUp = () => {
             setErrorMessage('Les mots de passe ne correspondent pas.');
             return;
         }
+        if (!entreprise) {
+            setErrorMessage('Veuillez inscrire votre entreprise.');
+            return;
+        }
         try {
             await neon.auth.signUp.email({
                 name: `${firstName.trim()} ${lastName.trim()}`,
                 email,
                 password,
-                role,
+                // role,
+                // entreprise,
+                // need to add role and entreprise to user table
             });
             console.log('Compte créé avec succès.');
             navigate('/connexion');
@@ -130,10 +137,21 @@ const SignUp = () => {
                                 <input
                                     type="password"
                                     id="confirmPassword"
-                                    name="confirmPassword"
+                                    name="confiremailmPassword"
                                     required
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
+                                />
+                            </div>
+                            <label htmlFor="enterprise">Entreprise</label>
+                            <div className="input-row amount-box">
+                                <input
+                                    type="text"
+                                    id="entreprise"
+                                    name="entreprise"
+                                    required
+                                    value={entreprise}
+                                    onChange={(e) => setEntreprise(e.target.value)}
                                 />
                             </div>
                             <label htmlFor="Role">Role</label>
