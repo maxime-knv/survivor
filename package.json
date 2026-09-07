@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@neondatabase/neon-js": "^0.7.0-beta",
     "firebase": "^12.18.0",
     "idb": "^8.0.3",
     "lucide-react": "^1.39.0",
