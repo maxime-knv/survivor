@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader'
 import { useState } from 'react';
 import { neon } from '../../lib/neon';
+import { createUser } from '../../services/userService';
 
 const SignUp = () => {
 
@@ -22,7 +23,7 @@ const SignUp = () => {
             setErrorMessage('Veuillez inscrire votre nom.');
             return;
         }
-        if (!lastName) {
+        if (!firstName) {
             setErrorMessage('Veuillez inscrire votre prénom.');
             return;
         }
@@ -43,13 +44,19 @@ const SignUp = () => {
             return;
         }
         try {
+            // call neon auth
             await neon.auth.signUp.email({
                 name: `${firstName.trim()} ${lastName.trim()}`,
-                email,
+                email: email.trim(),
                 password,
-                // role,
-                // entreprise,
-                // need to add role and entreprise to user table
+            });
+            // call neon db
+            await createUser({
+                email,
+                firstName,
+                lastName,
+                company: entreprise,
+                role,
             });
             console.log('Compte créé avec succès.');
             navigate('/connexion');
