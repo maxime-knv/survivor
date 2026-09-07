@@ -1,6 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { House, QrCode, FolderOpen, Store, Activity, CircleHelp } from 'lucide-react'
-import { currentUser } from '../data/user'
+import { getCurrentUser } from '../services/userService'
+import { useAsync } from '../services/useAsync'
 
 const navigation = [
     { to: '/accueil', label: 'Accueil', icon: House },
@@ -12,6 +13,8 @@ const navigation = [
 ]
 
 export default function Layout() {
+    const { data: currentUser } = useAsync(getCurrentUser, [])
+
     return (
         <div className="app-shell">
             <a className="skip-link" href="#main-content">
@@ -33,10 +36,10 @@ export default function Layout() {
 
                     <div className="gov-header-user">
                         <div className="profile-text">
-                            <div className="user-name">{currentUser.firstName} {currentUser.lastName}</div>
-                            <div className="user-role">{currentUser.role}, {currentUser.company}</div>
+                            <div className="user-name">{currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : '…'}</div>
+                            <div className="user-role">{currentUser ? `${currentUser.role}, ${currentUser.company}` : ''}</div>
                         </div>
-                        <div className="avatar" aria-hidden="true">{currentUser.avatarInitial}</div>
+                        <div className="avatar" aria-hidden="true">{currentUser?.avatarInitial ?? '?'}</div>
                     </div>
                 </div>
 

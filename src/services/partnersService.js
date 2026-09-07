@@ -1,13 +1,10 @@
-import { partners, partnerCategories } from '../data/partners'
-import { mockDelay } from './mockDelay'
+import { request } from './http'
 
-// Aujourd'hui : catalogue mock. Demain : `return request('/api/v1/partners')`
-// et `return request('/api/v1/partner-categories')`. Le catalogue restant
-// piloté par la donnée (voir data/partners.js), aucun gabarit n'a à changer.
+// Branché sur le vrai backend (server/, Prisma + Postgres).
 export async function getPartners() {
-    return mockDelay(partners)
+  return request('/partners')
 }
 
 export async function getPartnerCategories() {
-    return mockDelay(partnerCategories)
+  return request('/partner-categories')
 }

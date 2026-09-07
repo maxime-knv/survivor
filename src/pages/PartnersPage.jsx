@@ -1,13 +1,27 @@
 import { Panel, PanelGroup } from 'rsuite'
 import 'rsuite/Panel/styles/index.css'
 import PageHeader from '../components/ui/PageHeader'
-import { partners, partnerCategories } from '../data/partners'
-
-function categoryLabel(categoryId) {
-    return partnerCategories.find((category) => category.id === categoryId)?.label ?? 'Partenaire'
-}
+import LoadingState from '../components/ui/LoadingState'
+import { getPartners, getPartnerCategories } from '../services/partnersService'
+import { useAsync } from '../services/useAsync'
 
 export default function PartnerPage() {
+    const { data: partners, loading: partnersLoading } = useAsync(getPartners, [])
+    const { data: partnerCategories, loading: categoriesLoading } = useAsync(getPartnerCategories, [])
+
+    function categoryLabel(categoryId) {
+        return partnerCategories?.find((category) => category.id === categoryId)?.label ?? 'Partenaire'
+    }
+
+    if (partnersLoading || categoriesLoading) {
+        return (
+            <>
+                <PageHeader title="Nos partenaires" />
+                <LoadingState label="Chargement des partenaires..." />
+            </>
+        )
+    }
+
     return (
         <>
             <PageHeader title="Nos partenaires" />
@@ -16,7 +30,7 @@ export default function PartnerPage() {
                 à nos bénéficiaires. Intéressé par un partenariat ? Contactez-nous.
             </p>
             <PanelGroup className="partner-grid">
-                {partners.map((partner) => (
+                {(partners ?? []).map((partner) => (
                     <Panel
                         key={partner.id}
                         className="partner-card"

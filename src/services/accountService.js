@@ -1,6 +1,6 @@
-import { account } from '../data/user'
-import { mockDelay } from './mockDelay'
+import { request } from './http'
 
+// Branché sur le vrai backend (server/, Prisma + Postgres).
 export async function getAccount() {
-    return mockDelay(account)
+  return request('/account')
 }

@@ -1,6 +1,6 @@
-import { transactions } from '../data/transactions'
-import { mockDelay } from './mockDelay'
+import { request } from './http'
 
+// Branché sur le vrai backend (server/, Prisma + Postgres).
 export async function getTransactions() {
-    return mockDelay(transactions)
+  return request('/transactions')
 }

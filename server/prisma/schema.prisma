@@ -1,6 +1,5 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -8,13 +7,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// --- Partenaires -------------------------------------------------------------
+
+model PartnerCategory {
+  id      String    @id
+  label   String
+  Partner Partner[]
+}
+
 model Partner {
-  id          String        @id
+  id          String           @id @default(cuid())
   name        String
-  category    String
-  createdAt   DateTime      @default(now())
+  categoryId  String?
+  city        String?
+  description String?
+  featured    Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  Category    PartnerCategory? @relation(fields: [categoryId], references: [id])
   Transaction Transaction[]
 }
+
+// --- QR codes (géré par ailleurs, non modifié) --------------------------------
 
 model QrCode {
   id          String        @id
@@ -26,25 +39,35 @@ model QrCode {
   Transaction Transaction[]
 }
 
+// --- Transactions --------------------------------------------------------------
+
 model Transaction {
-  id        String   @id
+  id        String   @id @default(cuid())
+  label     String   @default("Transaction")
   amount    Float
   status    String   @default("SUCCESS")
   userId    String
-  partnerId String
-  qrCodeId  String
+  partnerId String?
+  qrCodeId  String?
   createdAt DateTime @default(now())
-  Partner   Partner  @relation(fields: [partnerId], references: [id])
-  QrCode    QrCode   @relation(fields: [qrCodeId], references: [id])
+  Partner   Partner? @relation(fields: [partnerId], references: [id])
+  QrCode    QrCode?  @relation(fields: [qrCodeId], references: [id])
   User      User     @relation(fields: [userId], references: [id])
 }
 
+// --- Utilisateur / compte --------------------------------------------------------
+
 model User {
-  id          String        @id
-  email       String        @unique
-  name        String
-  role        String        @default("EMPLOYEE")
-  createdAt   DateTime      @default(now())
-  QrCode      QrCode[]
-  Transaction Transaction[]
+  id            String        @id @default(cuid())
+  email         String        @unique
+  firstName     String        @default("Utilisateur")
+  lastName      String        @default("Démo")
+  company       String?
+  role          String        @default("EMPLOYEE")
+  balance       Float         @default(0)
+  monthlyCredit Float         @default(0)
+  monthlySpend  Float         @default(0)
+  createdAt     DateTime      @default(now())
+  QrCode        QrCode[]
+  Transaction   Transaction[]
 }

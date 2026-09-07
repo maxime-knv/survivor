@@ -1,6 +1,6 @@
-import { currentUser } from '../data/user'
-import { mockDelay } from './mockDelay'
+import { request } from './http'
 
+// Branché sur le vrai backend (server/, Prisma + Postgres).
 export async function getCurrentUser() {
-  return mockDelay(currentUser)
+  return request('/users/me')
 }
