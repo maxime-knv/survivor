@@ -1,31 +1,53 @@
 import { Link, useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader'
 import { useState } from 'react';
-import { auth } from '../../config/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { neon } from '../../lib/neon';
 
 const SignUp = () => {
 
     const navigate = useNavigate();
+    const [lastName, setLastName] = useState('');
+    const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [role, setRole] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleAccountCreation = async (event) => {
         event.preventDefault();
         setErrorMessage('');
-
+        if (!lastName) {
+            setErrorMessage('Veuillez inscrire votre nom.');
+            return;
+        }
+        if (!lastName) {
+            setErrorMessage('Veuillez inscrire votre prénom.');
+            return;
+        }
+        if (!email) {
+            setErrorMessage('Veuillez inscrire votre email.');
+            return;
+        }
+        if (!role) {
+            setErrorMessage('Veuillez sélectionner un profil.');
+            return;
+        }
         if (password !== confirmPassword) {
             setErrorMessage('Les mots de passe ne correspondent pas.');
             return;
         }
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            await neon.auth.signUp.email({
+                name: `${firstName.trim()} ${lastName.trim()}`,
+                email,
+                password,
+                role,
+            });
             console.log('Compte créé avec succès.');
             navigate('/connexion');
         } catch (error) {
-            setErrorMessage(error.message);
+            setErrorMessage(error.message || 'Impossible de créer le compte.');
         }
     };
 
@@ -55,6 +77,30 @@ const SignUp = () => {
                     <PageHeader title="Inscription"/>
                     <form onSubmit={handleAccountCreation}>
                         <section className="panel form-panel">
+                            <label htmlFor="lastName">Nom</label>
+                            <div className="input-row amount-box">
+                                <input
+                                    type="text"
+                                    id="lastName"
+                                    name="lastName"
+                                    required
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                />
+                            </div>
+
+                            <label htmlFor="firstName">Prénom</label>
+                            <div className="input-row amount-box">
+                                <input
+                                    type="text"
+                                    id="firstName"
+                                    name="firstName"
+                                    required
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                />
+                            </div>
+
                             <label htmlFor="email">Email</label>
                             <div className="input-row amount-box">
                                 <input
@@ -89,6 +135,27 @@ const SignUp = () => {
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                 />
+                            </div>
+                            <label htmlFor="Role">Role</label>
+                            <div className="role-button-div">
+                                <button
+                                    className={`nav-item role-btn${role === 'EMPLOYEE' ? ' active' : ''}`}
+                                    type="button"
+                                    aria-pressed={role === 'EMPLOYEE'}
+                                    onClick={() => setRole('EMPLOYEE')}
+                                >Salarié</button>
+                                <button
+                                    className={`nav-item role-btn${role === 'PARTNER' ? ' active' : ''}`}
+                                    type="button"
+                                    aria-pressed={role === 'PARTNER'}
+                                    onClick={() => setRole('PARTNER')}
+                                >Partenaire</button>
+                                <button
+                                    className={`nav-item role-btn${role === 'ADMIN' ? ' active' : ''}`}
+                                    type="button"
+                                    aria-pressed={role === 'ADMIN'}
+                                    onClick={() => setRole('ADMIN')}
+                                >Administrateur</button>
                             </div>
                         </section>
                         {errorMessage && <p role="alert">{errorMessage}</p>}

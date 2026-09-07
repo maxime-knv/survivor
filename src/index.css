@@ -313,6 +313,16 @@ h1, h2, h3, h4 {
   color: var(--blue-france);
 }
 
+.role-button-div {
+  display: flex;
+  gap: 4px;
+}
+
+.role-btn {
+  background: transparent;
+  cursor: pointer;
+}
+
 .nav-icon {
   width: 16px;
   display: inline-flex;

@@ -1,8 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader';
 import { useState } from 'react';
-import { auth } from '../../config/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { neon } from '../../lib/neon'
 
 const SignIn = () => {
     const navigate = useNavigate()
@@ -15,11 +14,11 @@ const SignIn = () => {
         setErrorMessage('');
 
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            await neon.auth.signIn.email({ email, password,});
             console.log('Connexion réussie.');
             navigate('/accueil');
         } catch (error) {
-            setErrorMessage(error.message);
+            setErrorMessage(error.message || 'Impossible de se connecter.');
         }
     };
 
