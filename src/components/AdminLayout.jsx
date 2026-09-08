@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import SignOutButton from './SignOutButton'
 import { LayoutDashboard, FileCheck2, Users, HandCoins } from 'lucide-react'
 
 const navigation = [
@@ -27,6 +28,7 @@ export default function AdminLayout() {
                     </div>
 
                     <div className="gov-header-user">
+                        <SignOutButton />
                         <div className="profile-text">
                             <div className="user-name">Jean-Eudes Berlier</div>
                             <div className="user-role">Administrateur</div>

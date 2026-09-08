@@ -1,4 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
+import AuthHeader from '../../components/AuthHeader'
+import { useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader';
 import { useState } from 'react';
 import { signIn } from '../../services/authService'
@@ -32,19 +33,7 @@ const SignIn = () => {
 
     return (
         <div className="app-shell">
-            <header className="gov-header">
-                <div className="gov-header-inner">
-                    <div className="gov-brand">
-                        <div className="gov-brand-text">
-                            <span className="gov-service-name">CartePro</span>
-                        </div>
-                    </div>
-                    <div>
-                        <Link className="nav-item" to="/inscription">Inscription</Link>
-                        <Link className="nav-item active" to="/connexion">Connexion</Link>
-                    </div>
-                </div>
-            </header>
+            <AuthHeader />
 
             <main className="auth-main">
                 <div className="page-container">

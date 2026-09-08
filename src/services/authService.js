@@ -13,6 +13,8 @@ export async function signIn({ email, password }) {
     return user
 }
 
-export function signOut() {
+export async function signOut() {
+    // Le cookie est HttpOnly : il doit être supprimé par le serveur.
+    await request('/auth/logout', { method: 'POST' })
     clearSessionUser()
 }

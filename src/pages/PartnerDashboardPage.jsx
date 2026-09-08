@@ -12,6 +12,7 @@ const formatTransactionDate = (value) => new Date(`${value}T12:00:00`).toLocaleD
 export default function PartnerDashboardPage() {
     const [transactions, setTransactions] = useState([])
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         let cancelled = false
@@ -20,7 +21,7 @@ export default function PartnerDashboardPage() {
                 setTransactions(list)
                 setLoading(false)
             }
-        })
+        }).catch((err) => { if (!cancelled) { setError(err); setLoading(false) } })
         return () => {
             cancelled = true
         }
@@ -32,6 +33,7 @@ export default function PartnerDashboardPage() {
     )
     const validatedCount = transactions.filter((transaction) => transaction.status === 'Validée').length
     const pendingCount = transactions.length - validatedCount
+    if (error) throw error
 
     if (loading) {
         return (

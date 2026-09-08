@@ -16,12 +16,18 @@ export default function AdminPartnerApplicationsPage() {
     const [notice, setNotice] = useState('')
     const [motifDrafts, setMotifDrafts] = useState({})
     const [errors, setErrors] = useState({})
+    const [loadError, setLoadError] = useState(null)
 
     useEffect(() => {
         let cancelled = false
         getPartnerApplications().then((list) => {
             if (!cancelled) {
                 setApplications(list)
+                setApplicationsLoading(false)
+            }
+        }).catch((error) => {
+            if (!cancelled) {
+                setLoadError(error)
                 setApplicationsLoading(false)
             }
         })
@@ -37,11 +43,16 @@ export default function AdminPartnerApplicationsPage() {
             return
         }
         setErrors((prev) => ({ ...prev, [id]: null }))
-        await reviewPartnerApplication(id, status, motif)
-        setApplications(await getPartnerApplications())
-        setNotice(status === 'approved' ? 'Partenaire validé.' : 'Demande refusée.')
+        try {
+            await reviewPartnerApplication(id, status, motif)
+            setApplications(await getPartnerApplications())
+            setNotice(status === 'APPROVED' ? 'Partenaire validé.' : 'Demande refusée.')
+        } catch (error) {
+            setErrors((prev) => ({ ...prev, [id]: error.message }))
+        }
     }
 
+    if (loadError) throw loadError
     if (categoriesLoading || applicationsLoading) {
         return (
             <>
@@ -88,14 +99,14 @@ export default function AdminPartnerApplicationsPage() {
                                             SIRET {application.siret} · {categoryLabel} · {application.city}
                                         </div>
                                         <div className="activity-time">{application.objetSocial}</div>
-                                        {application.status !== 'pending' ? (
+                                        {application.status !== 'PENDING' ? (
                                             <div className="activity-time">
                                                 {application.decidedAt} par {application.decidedBy}, motif : {application.motif}
                                             </div>
                                         ) : null}
                                     </div>
                                 </div>
-                                {application.status === 'pending' ? (
+                                {application.status === 'PENDING' ? (
                                     <div className="admin-review-actions">
                                         <div className="input-row note-row">
                                             <input
@@ -110,16 +121,16 @@ export default function AdminPartnerApplicationsPage() {
                                         {errors[application.id] ? (
                                             <p className="field-error" role="alert">{errors[application.id]}</p>
                                         ) : null}
-                                        <button className="link-btn" type="button" onClick={() => handleReview(application.id, 'approved')}>
+                                        <button className="link-btn" type="button" onClick={() => handleReview(application.id, 'APPROVED')}>
                                             <ShieldCheck size={14} /> Valider
                                         </button>
-                                        <button className="link-btn danger" type="button" onClick={() => handleReview(application.id, 'rejected')}>
+                                        <button className="link-btn danger" type="button" onClick={() => handleReview(application.id, 'REJECTED')}>
                                             <ShieldX size={14} /> Refuser
                                         </button>
                                     </div>
                                 ) : (
-                                    <span className={application.status === 'rejected' ? 'status-pill failed' : 'status-pill'}>
-                                        {application.status === 'approved' ? 'Validé' : 'Refusé'}
+                                    <span className={application.status === 'REJECTED' ? 'status-pill failed' : 'status-pill'}>
+                                        {application.status === 'APPROVED' ? 'Validé' : 'Refusé'}
                                     </span>
                                 )}
                             </div>

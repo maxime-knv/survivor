@@ -5,8 +5,8 @@ import { getPartners, getPartnerCategories } from '../services/partnersService'
 import { useAsync } from '../services/useAsync'
 
 export default function PublicHomePage() {
-    const { data: partners, loading: partnersLoading } = useAsync(getPartners, [])
-    const { data: categories, loading: categoriesLoading } = useAsync(getPartnerCategories, [])
+    const { data: partners, loading: partnersLoading, error: partnersError } = useAsync(getPartners, [], { throwOnError: false })
+    const { data: categories, loading: categoriesLoading, error: categoriesError } = useAsync(getPartnerCategories, [], { throwOnError: false })
 
     const categoryLabel = (categoryId) =>
         (categories ?? []).find((category) => category.id === categoryId)?.label ?? 'Partenaire'
@@ -31,10 +31,20 @@ export default function PublicHomePage() {
                     <p className="partners-intro">
                         Le catalogue des partenaires référencés par le dispositif CartePro, consultable sans connexion.
                     </p>
+                    <div className="auth-actions">
+                        <Link className="primary-btn" to="/inscription">Créer un compte salarié</Link>
+                        <Link className="link-btn" to="/inscription-partenaire">Devenir partenaire</Link>
+                    </div>
 
                     {partnersLoading || categoriesLoading ? (
                         <LoadingState label="Chargement..." />
-                    ) : (
+                    ) : partnersError || categoriesError ? (
+                        <section className="panel" role="alert">
+                            <h2>Catalogue momentanément indisponible</h2>
+                            <p>{(partnersError || categoriesError).message}</p>
+                            <button className="primary-btn" onClick={() => window.location.reload()}>Réessayer</button>
+                        </section>
+                    ) : !partners?.length ? <p>Aucun partenaire référencé pour le moment.</p> : (
                         <div className="qr-library-grid">
                             {partners.map((partner) => (
                                 <article key={partner.id} className="panel qr-library-card">

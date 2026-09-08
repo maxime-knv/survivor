@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import SignOutButton from './SignOutButton'
 import { House, QrCode, FolderOpen, Store, Activity, CircleHelp } from 'lucide-react'
 import { getCurrentUser } from '../services/userService'
 import { useAsync } from '../services/useAsync'
@@ -30,6 +31,7 @@ export default function Layout() {
                     </div>
 
                     <div className="gov-header-user">
+                        <SignOutButton />
                         <div className="profile-text">
                             <div className="user-name">{currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : '…'}</div>
                             <div className="user-role">{currentUser ? `${currentUser.role}, ${currentUser.company}` : ''}</div>

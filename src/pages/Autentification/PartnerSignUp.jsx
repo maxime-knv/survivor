@@ -1,11 +1,14 @@
+import AuthHeader from '../../components/AuthHeader'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import PageHeader from '../../components/ui/PageHeader'
-import { partnerCategories } from '../../data/partners'
+import { getPartnerCategories } from '../../services/partnersService'
+import { useAsync } from '../../services/useAsync'
 import { submitPartnerApplication } from '../../services/partnerApplicationService'
 import { isValidSiret } from '../../utils/siret'
 
 const PartnerSignUp = () => {
+    const { data: partnerCategories, loading: categoriesLoading, error: categoriesError } = useAsync(getPartnerCategories, [], { throwOnError: false })
     const [companyName, setCompanyName] = useState('')
     const [siret, setSiret] = useState('')
     const [objetSocial, setObjetSocial] = useState('')
@@ -13,6 +16,7 @@ const PartnerSignUp = () => {
     const [city, setCity] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+    const [password, setPassword] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [submitted, setSubmitted] = useState(false)
@@ -33,8 +37,10 @@ const PartnerSignUp = () => {
 
         setIsSubmitting(true)
         try {
-            await submitPartnerApplication({ companyName, siret, objetSocial, categoryId, city, email, phone })
+            await submitPartnerApplication({ companyName, siret, objetSocial, categoryId, city, email, phone, password })
             setSubmitted(true)
+        } catch (error) {
+            setErrorMessage(error.message || 'Impossible d’envoyer la demande.')
         } finally {
             setIsSubmitting(false)
         }
@@ -58,20 +64,7 @@ const PartnerSignUp = () => {
 
     return (
         <div className="app-shell">
-            <header className="gov-header">
-                <div className="gov-header-inner">
-                    <div className="gov-brand">
-                        <div className="gov-brand-text">
-                            <span className="gov-service-name">CartePro</span>
-                        </div>
-                    </div>
-                    <div>
-                        <Link className="nav-item" to="/inscription">Salarié</Link>
-                        <Link className="nav-item active" to="/inscription-partenaire">Partenaire</Link>
-                        <Link className="nav-item" to="/connexion">Connexion</Link>
-                    </div>
-                </div>
-            </header>
+            <AuthHeader />
 
             <main className="auth-main">
                 <div className="page-container">
@@ -115,12 +108,13 @@ const PartnerSignUp = () => {
 
                             <label htmlFor="category">Catégorie</label>
                             <div className="input-row static-row">
-                                <select id="category" required value={categoryId} onChange={(event) => setCategoryId(event.target.value)}>
+                                <select id="category" required disabled={categoriesLoading || !!categoriesError} value={categoryId} onChange={(event) => setCategoryId(event.target.value)}>
                                     <option value="">Choisir une catégorie</option>
-                                    {partnerCategories.map((category) => (
+                                    {(partnerCategories ?? []).map((category) => (
                                         <option key={category.id} value={category.id}>{category.label}</option>
                                     ))}
                                 </select>
+                                {categoriesError && <p role="alert">{categoriesError.message}</p>}
                             </div>
 
                             <label htmlFor="city">Ville</label>
@@ -143,9 +137,14 @@ const PartnerSignUp = () => {
                             <div className="input-row amount-box">
                                 <input id="phone" required value={phone} onChange={(event) => setPhone(event.target.value)} />
                             </div>
+
+                            <label htmlFor="password">Mot de passe</label>
+                            <div className="input-row amount-box">
+                                <input id="password" type="password" required minLength="8" value={password} onChange={(event) => setPassword(event.target.value)} />
+                            </div>
                         </section>
                         {errorMessage && <p role="alert" className="field-error">{errorMessage}</p>}
-                        <button className="primary-btn large-btn" type="submit" disabled={isSubmitting}>
+                        <button className="primary-btn large-btn" type="submit" disabled={isSubmitting || categoriesLoading || !!categoriesError}>
                             {isSubmitting ? 'Envoi...' : 'Envoyer ma demande'}
                         </button>
                     </form>

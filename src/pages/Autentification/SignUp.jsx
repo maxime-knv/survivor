@@ -1,4 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
+import AuthHeader from '../../components/AuthHeader'
+import { useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader'
 import { useState } from 'react';
 import { createUser } from '../../services/userService';
@@ -12,7 +13,7 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [entreprise, setEntreprise] = useState('');
-    const [role, setRole] = useState('');
+    const role = 'EMPLOYEE';
     const [errorMessage, setErrorMessage] = useState('');
 
     const handleAccountCreation = async (event) => {
@@ -28,10 +29,6 @@ const SignUp = () => {
         }
         if (!email) {
             setErrorMessage('Veuillez inscrire votre email.');
-            return;
-        }
-        if (!role) {
-            setErrorMessage('Veuillez sélectionner un profil.');
             return;
         }
         if (password.length < 8) {
@@ -64,19 +61,7 @@ const SignUp = () => {
 
     return (
         <div className="app-shell">
-            <header className="gov-header">
-                <div className="gov-header-inner">
-                    <div className="gov-brand">
-                        <div className="gov-brand-text">
-                            <span className="gov-service-name">CartePro</span>
-                        </div>
-                    </div>
-                    <div>
-                        <Link className="nav-item active" to="/inscription">Inscription</Link>
-                        <Link className="nav-item" to="/connexion">Connexion</Link>
-                    </div>
-                </div>
-            </header>
+            <AuthHeader />
 
             <main className="auth-main">
                 <div className="page-container">
@@ -153,27 +138,7 @@ const SignUp = () => {
                                     onChange={(e) => setEntreprise(e.target.value)}
                                 />
                             </div>
-                            <label htmlFor="Role">Role</label>
-                            <div className="role-button-div">
-                                <button
-                                    className={`nav-item role-btn${role === 'EMPLOYEE' ? ' active' : ''}`}
-                                    type="button"
-                                    aria-pressed={role === 'EMPLOYEE'}
-                                    onClick={() => setRole('EMPLOYEE')}
-                                >Salarié</button>
-                                <button
-                                    className={`nav-item role-btn${role === 'PARTNER' ? ' active' : ''}`}
-                                    type="button"
-                                    aria-pressed={role === 'PARTNER'}
-                                    onClick={() => setRole('PARTNER')}
-                                >Partenaire</button>
-                                <button
-                                    className={`nav-item role-btn${role === 'ADMIN' ? ' active' : ''}`}
-                                    type="button"
-                                    aria-pressed={role === 'ADMIN'}
-                                    onClick={() => setRole('ADMIN')}
-                                >Administrateur</button>
-                            </div>
+                            <p className="form-hint">Cette inscription crée un compte salarié. Les comptes partenaires sont soumis à validation administrative.</p>
                         </section>
                         {errorMessage && <p role="alert">{errorMessage}</p>}
                         <button className="primary-btn large-btn" type="submit">Inscription</button>

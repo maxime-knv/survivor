@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FileCheck2, HandCoins, Store, Users } from 'lucide-react'
 import PageHeader from '../components/ui/PageHeader'
@@ -6,35 +5,19 @@ import SimulationBadge from '../components/ui/SimulationBadge'
 import LoadingState from '../components/ui/LoadingState'
 import { getPartners } from '../services/partnersService'
 import { getPartnerApplications } from '../services/partnerApplicationService'
-import { getAccount } from '../services/accountService'
-import { getOtherEmployeeAccounts } from '../services/employeesService'
+import { getEmployees } from '../services/adminService'
 import { getEmployers } from '../services/employersService'
 import { useAsync } from '../services/useAsync'
 import { formatCurrency } from '../utils/format'
 
 export default function AdminDashboardPage() {
     const { data: partners, loading: partnersLoading } = useAsync(getPartners, [])
-    const { data: account, loading: accountLoading } = useAsync(getAccount, [])
-    const { data: otherEmployees, loading: employeesLoading } = useAsync(getOtherEmployeeAccounts, [])
+    const { data: employees, loading: employeesLoading } = useAsync(getEmployees, [])
     const { data: employers, loading: employersLoading } = useAsync(getEmployers, [])
 
-    const [applications, setApplications] = useState([])
-    const [applicationsLoading, setApplicationsLoading] = useState(true)
+    const { data: applications, loading: applicationsLoading } = useAsync(getPartnerApplications, [])
 
-    useEffect(() => {
-        let cancelled = false
-        getPartnerApplications().then((applicationList) => {
-            if (!cancelled) {
-                setApplications(applicationList)
-                setApplicationsLoading(false)
-            }
-        })
-        return () => {
-            cancelled = true
-        }
-    }, [])
-
-    if (partnersLoading || accountLoading || employeesLoading || employersLoading || applicationsLoading) {
+    if (partnersLoading || employeesLoading || employersLoading || applicationsLoading) {
         return (
             <>
                 <PageHeader title="Tableau de bord national" />
@@ -43,8 +26,7 @@ export default function AdminDashboardPage() {
         )
     }
 
-    const employees = [account, ...otherEmployees]
-    const pendingApplications = applications.filter((application) => application.status === 'pending').length
+    const pendingApplications = applications.filter((application) => application.status === 'PENDING').length
     const totalMonthlyTopUp = employers.reduce((sum, employer) => sum + employer.monthlyTopUp, 0)
 
     return (

@@ -1,6 +1,8 @@
 import { NavLink, Outlet } from 'react-router-dom'
+import SignOutButton from './SignOutButton'
 import { LayoutDashboard, ClipboardCheck, Store, UserRound } from 'lucide-react'
-import { partnerAccount } from '../data/partnerAccount'
+import { getPartnerAccount } from '../services/partnerAccountService'
+import { useAsync } from '../services/useAsync'
 
 const navigation = [
     { to: '/partenaire/tableau-de-bord', label: 'Tableau de bord', icon: LayoutDashboard },
@@ -10,6 +12,8 @@ const navigation = [
 ]
 
 export default function PartnerLayout() {
+    const { data: partnerAccount, loading } = useAsync(getPartnerAccount, [])
+    if (loading) return <p>Chargement du compte partenaire…</p>
     return (
         <div className="app-shell">
             <a className="skip-link" href="#main-content">
@@ -28,6 +32,7 @@ export default function PartnerLayout() {
                     </div>
 
                     <div className="gov-header-user">
+                        <SignOutButton />
                         <div className="profile-text">
                             <div className="user-name">{partnerAccount.name}</div>
                             <div className="user-role">{partnerAccount.category}, {partnerAccount.location}</div>
