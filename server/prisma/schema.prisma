@@ -32,9 +32,12 @@ model Partner {
 model QrCode {
   id          String        @id
   code        String        @unique
+  amount      Decimal      @db.Decimal(10, 2)
+  label       String?
   status      String        @default("ACTIVE")
   userId      String
   createdAt   DateTime      @default(now())
+  expiresAt   DateTime
   User        User          @relation(fields: [userId], references: [id])
   Transaction Transaction[]
 }
