@@ -14,6 +14,7 @@ const categories = [
   { id: 'sante', label: 'Santé' },
   { id: 'mobilite', label: 'Mobilité' },
   { id: 'sport', label: 'Sport' },
+  { id: 'culture', label: 'Culture'},
 ]
 
 const partners = [
@@ -105,36 +106,43 @@ async function main() {
   const demoTransactions = [
     {
       id: 'txn-seed-1',
-      label: 'Glaces Artisanales Corrèze',
-      partnerId: 'glaces-artisanales-correze',
+      label: 'Le Comptoir du Midi',
+      partnerId: 'le-comptoir-du-midi',
       amount: -6.5,
       createdAt: new Date(now - 4 * 24 * 60 * 60000),
     },
     {
       id: 'txn-seed-2',
-      label: 'Abondement employeur (Entreprise Démo)',
-      partnerId: null,
+      label: 'Épicerie Sainte-Claire',
+      partnerId: 'epicerie-sainte-claire',
       amount: 480,
       createdAt: new Date(now - 5 * 24 * 60 * 60000),
     },
     {
       id: 'txn-seed-3',
-      label: 'KostumParty',
-      partnerId: 'kostumparty',
+      label: 'Librairie Vasseur',
+      partnerId: 'librairie-vasseur',
       amount: -32,
       createdAt: new Date(now - 8 * 24 * 60 * 60000),
     },
     {
       id: 'txn-seed-4',
-      label: 'Chapelier Fontaine',
-      partnerId: 'chapelier-fontaine',
+      label: 'Pharmacie du Parc ',
+      partnerId: 'pharmacie-du-parc ',
       amount: -45,
       createdAt: new Date(now - 10 * 24 * 60 * 60000),
     },
     {
       id: 'txn-seed-5',
-      label: 'Poney Dream 78',
-      partnerId: 'poney-dream-78',
+      label: 'Transports Régionaux Unifiés',
+      partnerId: 'transports-régionaux-unifiés',
+      amount: -28,
+      createdAt: new Date(now - 13 * 24 * 60 * 60000),
+    },
+    {
+      id: 'txn-seed-6',
+      label: 'Sport Loisirs Aubagne',
+      partnerId: 'sport-loisirs-aubagne',
       amount: -28,
       createdAt: new Date(now - 13 * 24 * 60 * 60000),
     },

@@ -21,6 +21,7 @@ model Partner {
   categoryId  String?
   city        String?
   description String?
+  archived    Boolean          @default(false)
   featured    Boolean          @default(false)
   createdAt   DateTime         @default(now())
   Category    PartnerCategory? @relation(fields: [categoryId], references: [id])
@@ -53,7 +54,6 @@ model Transaction {
   partnerId String?
   qrCodeId  String?
   createdAt DateTime @default(now())
-  ARCHIVED  Boolean?
   Partner   Partner? @relation(fields: [partnerId], references: [id])
   QrCode    QrCode?  @relation(fields: [qrCodeId], references: [id])
   User      User     @relation(fields: [userId], references: [id])
