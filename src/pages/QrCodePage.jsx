@@ -101,7 +101,7 @@ export default function QrCodePage() {
           <div className="form-group">
             <span>Compte source</span>
             <div className="input-row static-row">
-              <span>Compte Ticket Tout, solde {formatCurrency(account.balance)}</span>
+              <span>Compte CartePro, solde {formatCurrency(account.balance)}</span>
             </div>
           </div>
 
@@ -159,7 +159,7 @@ export default function QrCodePage() {
       {isExpanded && lastGenerated ? (
         <QrLightbox
           id={lastGenerated.id}
-          title={lastGenerated.label || 'Code QR Ticket Tout'}
+          title={lastGenerated.label || 'Code QR CartePro'}
           caption={`${formatCurrency(lastGenerated.amount)}, ${
             isQrValid(lastGenerated.createdAt)
               ? `valide jusqu’à ${formatTime(expiresAt)}`

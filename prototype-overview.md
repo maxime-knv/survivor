@@ -1,10 +1,10 @@
-# Ticket Tout — Où en est le prototype
+# CartePro — Où en est le prototype
 
 *Document de présentation, mis à jour le 03/09/2026.*
 
 ## En une phrase
 
-Ticket Tout est une application web qui permet à un salarié de créer un code QR représentant un montant à dépenser, de le consulter et de le télécharger. Pour l'instant, c'est une **maquette interactive** : elle montre comment l'application fonctionnera, mais elle n'est reliée à aucun vrai compte bancaire ni à aucun vrai serveur.
+CartePro est une application web qui permet à un salarié de créer un code QR représentant un montant à dépenser, de le consulter et de le télécharger. Pour l'instant, c'est une **maquette interactive** : elle montre comment l'application fonctionnera, mais elle n'est reliée à aucun vrai compte bancaire ni à aucun vrai serveur.
 
 ## Ce qui est déjà fonctionnel
 

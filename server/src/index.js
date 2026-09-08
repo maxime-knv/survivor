@@ -25,7 +25,7 @@ app.use('/api/v1/account', accountRouter)
 app.use('/api/v1/qr-codes', qrCodesRouter)
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Serveur Ticket Tout (données) opérationnel' })
+  res.json({ message: 'Serveur CartePro (données) opérationnel' })
 })
 
 app.listen(PORT, () => {
