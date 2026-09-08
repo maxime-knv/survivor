@@ -6,10 +6,10 @@ import { prisma } from '../lib/prisma.js'
 // `Authorization: Bearer <idToken>` avec firebase-admin et en tirer l'email),
 // on identifie l'utilisateur via un header `x-user-email`, ou par défaut
 // l'utilisateur de démo créé par le seed.
-const DEMO_EMAIL = 'alex.martin@demo.ticket-tout.fr'
+
 
 export async function resolveUser(req, res, next) {
-  const email = req.header('x-user-email') || DEMO_EMAIL
+  const email = req.header('x-user-email')
 
   const user = await prisma.user.findUnique({ where: { email } })
   if (!user) {
