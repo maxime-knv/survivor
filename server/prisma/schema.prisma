@@ -53,6 +53,7 @@ model Transaction {
   partnerId String?
   qrCodeId  String?
   createdAt DateTime @default(now())
+  ARCHIVED  Boolean?
   Partner   Partner? @relation(fields: [partnerId], references: [id])
   QrCode    QrCode?  @relation(fields: [qrCodeId], references: [id])
   User      User     @relation(fields: [userId], references: [id])
@@ -63,6 +64,7 @@ model Transaction {
 model User {
   id            String        @id @default(cuid())
   email         String        @unique
+  password      String        @default("")
   firstName     String        @default("Utilisateur")
   lastName      String        @default("Démo")
   company       String?

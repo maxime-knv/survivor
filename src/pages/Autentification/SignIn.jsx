@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader';
 import { useState } from 'react';
-import { neon } from '../../lib/neon'
+import { signIn } from '../../services/authService'
 
 const SignIn = () => {
     const navigate = useNavigate()
@@ -14,8 +14,7 @@ const SignIn = () => {
         setErrorMessage('');
 
         try {
-            await neon.auth.signIn.email({ email, password,});
-            console.log('Connexion réussie.');
+            await signIn({ email, password });
             navigate('/accueil');
         } catch (error) {
             setErrorMessage(error.message || 'Impossible de se connecter.');
