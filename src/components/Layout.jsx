@@ -24,12 +24,8 @@ export default function Layout() {
             <header className="gov-header">
                 <div className="gov-header-inner">
                     <div className="gov-brand">
-                        <div className="marianne-mark" aria-hidden="true">CP</div>
                         <div className="gov-brand-text">
-                            <span className="gov-service-name">
-                                CartePro
-                                <span className="gov-service-tag">Ministère du Job et Bonheur</span>
-                            </span>
+                            <span className="gov-service-name">CartePro</span>
                         </div>
                     </div>
 
@@ -69,10 +65,10 @@ export default function Layout() {
 
             <footer className="gov-footer">
                 <div className="gov-footer-inner">
-                    <span>© République Française — Ministère du Job et Bonheur</span>
+                    <span>Démonstrateur technique, ne constitue pas un service public en exploitation.</span>
                     <div className="gov-footer-links">
                         <a href="/aide">Aide</a>
-                        <a href="mailto:support@tickettout.exemple">Nous contacter</a>
+                        <a href="mailto:support@cartepro.exemple">Nous contacter</a>
                         <a href="/aide">Accessibilité : non conforme</a>
                     </div>
                 </div>
