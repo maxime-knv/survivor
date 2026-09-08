@@ -5,6 +5,8 @@ import partnerCategoriesRouter from './routes/partnerCategories.js'
 import transactionsRouter from './routes/transactions.js'
 import usersRouter from './routes/users.js'
 import accountRouter from './routes/account.js'
+import qrCodesRouter from './routes/qrCodes.js'
+import authRouter from './routes/auth.js'
 
 const app = express()
 
@@ -21,9 +23,11 @@ app.use('/api/v1/partner-categories', partnerCategoriesRouter)
 app.use('/api/v1/transactions', transactionsRouter)
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/account', accountRouter)
+app.use('/api/v1/qr-codes', qrCodesRouter)
+app.use('/api/v1/auth', authRouter)
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Serveur Ticket Tout (données) opérationnel' })
+  res.json({ message: 'Serveur CartePro (données) opérationnel' })
 })
 
 app.listen(PORT, () => {

@@ -1,18 +1,26 @@
 import { config } from '../config'
+import { getSessionUser } from './session'
 
-// Client HTTP générique, prêt pour le backend à venir. Aucun service ne
-// l'utilise encore (tout est mock) : quand une route réelle existe, un
-// service passe de "return mockDelay(...)" à "return request('/api/...')"
-// sans que les pages qui le consomment aient à changer.
+// Client HTTP générique pour les services branchés sur le vrai backend
+// (server/, Prisma + Postgres). Pas de token : on identifie l'utilisateur
+// connecté via le header `x-user-email`, lu par `resolveUser` côté serveur
+// (qui retombe sur un utilisateur de démo si l'en-tête est absent).
 
 export async function request(path, options = {}) {
+  const sessionUser = getSessionUser()
+
   const response = await fetch(`${config.apiBaseUrl}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+    headers: {
+      'Content-Type': 'application/json',
+      ...(sessionUser?.email ? { 'x-user-email': sessionUser.email } : {}),
+      ...options.headers,
+    },
     ...options,
   })
 
   if (!response.ok) {
-    throw new Error(`Requête ${path} échouée (${response.status})`)
+    const body = await response.json().catch(() => null)
+    throw new Error(body?.error || `Requête ${path} échouée (${response.status})`)
   }
 
   if (response.status === 204) return null

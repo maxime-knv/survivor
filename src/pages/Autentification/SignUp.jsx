@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader'
 import { useState } from 'react';
-import { neon } from '../../lib/neon';
+import { createUser } from '../../services/userService';
 
 const SignUp = () => {
 
@@ -22,7 +22,7 @@ const SignUp = () => {
             setErrorMessage('Veuillez inscrire votre nom.');
             return;
         }
-        if (!lastName) {
+        if (!firstName) {
             setErrorMessage('Veuillez inscrire votre prénom.');
             return;
         }
@@ -34,6 +34,10 @@ const SignUp = () => {
             setErrorMessage('Veuillez sélectionner un profil.');
             return;
         }
+        if (password.length < 8) {
+            setErrorMessage('Le mot de passe doit contenir au moins 8 caractères.');
+            return;
+        }
         if (password !== confirmPassword) {
             setErrorMessage('Les mots de passe ne correspondent pas.');
             return;
@@ -43,13 +47,13 @@ const SignUp = () => {
             return;
         }
         try {
-            await neon.auth.signUp.email({
-                name: `${firstName.trim()} ${lastName.trim()}`,
+            await createUser({
                 email,
                 password,
-                // role,
-                // entreprise,
-                // need to add role and entreprise to user table
+                firstName,
+                lastName,
+                company: entreprise,
+                role,
             });
             console.log('Compte créé avec succès.');
             navigate('/connexion');
@@ -67,7 +71,7 @@ const SignUp = () => {
                         <div className="gov-brand-text">
                             <span className="gov-eyebrow">République Française</span>
                             <span className="gov-service-name">
-                                Ticket Tout
+                                CartePro
                                 <span className="gov-service-tag">Ministère du Job et Bonheur</span>
                             </span>
                         </div>

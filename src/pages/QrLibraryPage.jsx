@@ -81,7 +81,7 @@ export default function QrLibraryPage() {
       {expandedEntry ? (
         <QrLightbox
           id={expandedEntry.id}
-          title={expandedEntry.label || 'Code QR Ticket Tout'}
+          title={expandedEntry.label || 'Code QR CartePro'}
           caption={`${formatCurrency(expandedEntry.amount)}, ${
             isQrValid(expandedEntry.createdAt)
               ? `valide jusqu’à ${formatTime(getExpiryDate(expandedEntry.createdAt))}`

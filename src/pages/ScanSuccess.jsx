@@ -19,7 +19,7 @@ export default function ScanSuccess() {
             <div className="standalone-header">
                 <div className="standalone-mark" aria-hidden="true">RF</div>
                 <span className="standalone-eyebrow">République Française</span>
-                <h1 className="standalone-title">Ticket Tout — Ministère du Job et Bonheur</h1>
+                <h1 className="standalone-title">CartePro — Ministère du Job et Bonheur</h1>
             </div>
 
             <div className="standalone-card">

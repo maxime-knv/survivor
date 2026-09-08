@@ -8,7 +8,7 @@ export default function EmployeeSpace() {
             <div className="standalone-header">
                 <div className="standalone-mark" aria-hidden="true">RF</div>
                 <span className="standalone-eyebrow">République Française</span>
-                <h1 className="standalone-title">Ticket Tout — Mon espace salarié</h1>
+                <h1 className="standalone-title">CartePro — Mon espace salarié</h1>
             </div>
 
             <div className="standalone-card">

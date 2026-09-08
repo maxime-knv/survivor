@@ -7,8 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// --- Partenaires -------------------------------------------------------------
-
 model PartnerCategory {
   id      String    @id
   label   String
@@ -18,16 +16,15 @@ model PartnerCategory {
 model Partner {
   id          String           @id @default(cuid())
   name        String
+  createdAt   DateTime         @default(now())
   categoryId  String?
   city        String?
   description String?
   featured    Boolean          @default(false)
-  createdAt   DateTime         @default(now())
+  archived    Boolean?         @default(false)
   Category    PartnerCategory? @relation(fields: [categoryId], references: [id])
   Transaction Transaction[]
 }
-
-// --- QR codes (géré par ailleurs, non modifié) --------------------------------
 
 model QrCode {
   id          String        @id
@@ -35,39 +32,41 @@ model QrCode {
   status      String        @default("ACTIVE")
   userId      String
   createdAt   DateTime      @default(now())
+  amount      Decimal       @db.Decimal(10, 2)
+  expiresAt   DateTime
+  label       String?
   User        User          @relation(fields: [userId], references: [id])
   Transaction Transaction[]
 }
 
-// --- Transactions --------------------------------------------------------------
-
 model Transaction {
   id        String   @id @default(cuid())
-  label     String   @default("Transaction")
   amount    Float
   status    String   @default("SUCCESS")
   userId    String
   partnerId String?
   qrCodeId  String?
   createdAt DateTime @default(now())
+  label     String   @default("Transaction")
+  ARCHIVED  Boolean?
   Partner   Partner? @relation(fields: [partnerId], references: [id])
   QrCode    QrCode?  @relation(fields: [qrCodeId], references: [id])
   User      User     @relation(fields: [userId], references: [id])
 }
 
-// --- Utilisateur / compte --------------------------------------------------------
-
 model User {
   id            String        @id @default(cuid())
   email         String        @unique
+  role          String        @default("EMPLOYEE")
+  createdAt     DateTime      @default(now())
+  balance       Float         @default(0)
+  company       String?
   firstName     String        @default("Utilisateur")
   lastName      String        @default("Démo")
-  company       String?
-  role          String        @default("EMPLOYEE")
-  balance       Float         @default(0)
   monthlyCredit Float         @default(0)
   monthlySpend  Float         @default(0)
-  createdAt     DateTime      @default(now())
+  password      String        @default("")
+  status        String?
   QrCode        QrCode[]
   Transaction   Transaction[]
 }

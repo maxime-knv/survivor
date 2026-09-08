@@ -6,6 +6,7 @@ const router = express.Router()
 // GET /api/v1/partners
 router.get('/', async (req, res) => {
   const partners = await prisma.partner.findMany({
+    where: { archived : false },
     orderBy: { name: 'asc' },
   })
 

@@ -4,45 +4,62 @@
 //
 // Utilisation : npm run db:seed (depuis server/)
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
 const categories = [
-  { id: 'loisirs', label: 'Loisirs & Bien-être' },
-  { id: 'gastronomie', label: 'Gastronomie' },
-  { id: 'shopping', label: 'Shopping & Mode' },
-  { id: 'culture', label: 'Culture' },
+  { id: 'restauration', label: 'Restauration' },
+  { id: 'alimentation', label: 'Alimentation' },
+  { id: 'sante', label: 'Santé' },
+  { id: 'mobilite', label: 'Mobilité' },
+  { id: 'sport', label: 'Sport' },
+  { id: 'culture', label: 'Culture'},
 ]
 
 const partners = [
   {
-    id: 'poney-dream-78',
-    name: 'Poney Dream 78',
-    categoryId: 'loisirs',
-    city: 'Région parisienne',
-    description: 'Club de poney, excellent pour le team building et la reconnexion à la nature.',
+    id: 'le-comptoir-du-midi',
+    name: 'Le Comptoir du Midi',
+    categoryId: 'restauration',
+    city: 'unknown',
+    description: '',
     featured: true,
   },
   {
-    id: 'kostumparty',
-    name: 'KostumParty',
-    categoryId: 'shopping',
-    city: 'Paris 11e',
-    description: 'Magasin de déguisements : la créativité, c’est la clé du bonheur au travail.',
+    id: 'epicerie-sainte-claire',
+    name: 'Épicerie Sainte-Claire',
+    categoryId: 'alimentation',
+    city: 'unknown',
+    description: '',
   },
   {
-    id: 'glaces-artisanales-correze',
-    name: 'Glaces Artisanales Corrèze',
-    categoryId: 'gastronomie',
-    city: 'En ligne · Click & collect',
-    description: 'Glacier artisanal, en soutien à l’artisanat français.',
+    id: 'librairie-vasseur',
+    name: 'Librairie Vasseur',
+    categoryId: 'culture',
+    city: 'unknown',
+    description: '',
   },
   {
-    id: 'chapelier-fontaine',
-    name: 'Chapelier Fontaine',
-    categoryId: 'shopping',
-    city: 'Toulouse',
-    description: 'Chapeaux en feutre, l’élégance à la française.',
+    id: 'pharmacie-du-parc',
+    name: 'Pharmacie du Parc',
+    categoryId: 'sante',
+    city: 'unknown',
+    description: '',
+  },
+  {
+    id: 'transports-regionaux-unifies',
+    name: 'Transports Régionaux Unifiés',
+    categoryId: 'mobilite',
+    city: 'unknown',
+    description: '',
+  },
+  {
+    id: 'sport-loisirs-aubagne',
+    name: 'Sport Loisirs Aubagne',
+    categoryId: 'sport',
+    city: 'unknown',
+    description: '',
   },
 ]
 
@@ -66,11 +83,14 @@ async function main() {
   }
 
   console.log('Seed : utilisateur de démo...')
+  // Mot de passe de démo, en clair uniquement ici (seed) : "Demo1234!"
+  const demoPasswordHash = await bcrypt.hash('Demo1234!', 10)
   const user = await prisma.user.upsert({
     where: { email: 'alex.martin@demo.ticket-tout.fr' },
-    update: {},
+    update: { password: demoPasswordHash },
     create: {
       email: 'alex.martin@demo.ticket-tout.fr',
+      password: demoPasswordHash,
       firstName: 'Alex',
       lastName: 'Martin',
       company: 'Entreprise Démo',
@@ -86,38 +106,51 @@ async function main() {
   const demoTransactions = [
     {
       id: 'txn-seed-1',
-      label: 'Glaces Artisanales Corrèze',
-      partnerId: 'glaces-artisanales-correze',
+      label: 'Le Comptoir du Midi',
+      partnerId: 'le-comptoir-du-midi',
       amount: -6.5,
       createdAt: new Date(now - 4 * 24 * 60 * 60000),
     },
     {
       id: 'txn-seed-2',
-      label: 'Abondement employeur (Entreprise Démo)',
-      partnerId: null,
-      amount: 480,
+      label: 'Épicerie Sainte-Claire',
+      partnerId: 'epicerie-sainte-claire',
+      amount: -40,
       createdAt: new Date(now - 5 * 24 * 60 * 60000),
     },
     {
       id: 'txn-seed-3',
-      label: 'KostumParty',
-      partnerId: 'kostumparty',
+      label: 'Librairie Vasseur',
+      partnerId: 'librairie-vasseur',
       amount: -32,
       createdAt: new Date(now - 8 * 24 * 60 * 60000),
     },
     {
       id: 'txn-seed-4',
-      label: 'Chapelier Fontaine',
-      partnerId: 'chapelier-fontaine',
+      label: 'Pharmacie du Parc',
+      partnerId: 'pharmacie-du-parc',
       amount: -45,
       createdAt: new Date(now - 10 * 24 * 60 * 60000),
     },
     {
       id: 'txn-seed-5',
-      label: 'Poney Dream 78',
-      partnerId: 'poney-dream-78',
+      label: 'Transports Régionaux Unifiés',
+      partnerId: 'transports-regionaux-unifies',
       amount: -28,
       createdAt: new Date(now - 13 * 24 * 60 * 60000),
+    },
+    {
+      id: 'txn-seed-6',
+      label: 'Sport Loisirs Aubagne',
+      partnerId: 'sport-loisirs-aubagne',
+      amount: -28,
+      createdAt: new Date(now - 14 * 24 * 60 * 60000),
+    },
+    {
+      id: 'txn-seed-7',
+      label: 'Abondement employeur (Entreprise Démo)',
+      amount: 400,
+      createdAt: new Date(now - 15 * 24 * 60 * 60000),
     },
   ]
 
