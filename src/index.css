@@ -1,17 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800&display=swap');
 
 /*
- * Système de design institutionnel, inspiré du Système de Design de l'État
- * (gouvernement.fr / service-public.fr) : palette Bleu France / Rouge Marianne,
- * surfaces neutres, bordures franches, radius et ombres réduits au minimum.
+ * Identité neutre CartePro : couleur primaire teal, surfaces neutres,
+ * bordures franches, radius et ombres réduits au minimum. Ni logo ni
+ * référence institutionnelle (voir gel de communication du 2026-09-08).
  */
 :root {
-  --blue-france: #000091;
-  --blue-france-hover: #1212ff;
-  --blue-france-active: #2323ff;
-  --blue-france-tint: #e3e3fd;
-  --red-marianne: #e1000f;
-  --red-marianne-tint: #fee9e9;
+  --brand-primary: #0f6e6a;
+  --brand-primary-hover: #0c5a57;
+  --brand-primary-active: #094644;
+  --brand-primary-tint: #e3f2f1;
 
   --grey-bg: #f6f6f6;
   --grey-bg-alt: #eeeeee;
@@ -32,8 +30,8 @@
 
   --focus-ring: #0a76f6;
   --radius: 4px;
-  --font-title: 'Marianne', 'Work Sans', Arial, sans-serif;
-  --font-body: 'Marianne', 'Work Sans', Arial, sans-serif;
+  --font-title: 'Work Sans', Arial, sans-serif;
+  --font-body: 'Work Sans', Arial, sans-serif;
 }
 
 :root {
@@ -73,11 +71,11 @@ body {
 a {
   text-decoration: underline;
   text-underline-offset: 2px;
-  color: var(--blue-france);
+  color: var(--brand-primary);
 }
 
 a:hover {
-  color: var(--blue-france-hover);
+  color: var(--brand-primary-hover);
 }
 
 button, input, select {
@@ -127,7 +125,7 @@ select:focus-visible,
   left: 0;
   z-index: 200;
   padding: 12px 20px;
-  background: var(--blue-france);
+  background: var(--brand-primary);
   color: #fff;
   font-family: var(--font-title);
   font-size: 0.9rem;
@@ -176,39 +174,12 @@ h1, h2, h3, h4 {
   min-width: 0;
 }
 
-/* Bloc-marque état : badge "RF", inspiré des emblèmes officiels
-   (préfectures, mairies, administrations), plutôt qu'un simple drapeau. */
-.marianne-mark {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--blue-france);
-  border-bottom: 3px solid var(--red-marianne);
-  color: #fff;
-  font-family: var(--font-title);
-  font-weight: 800;
-  font-size: 1.05rem;
-  letter-spacing: 0.01em;
-}
-
 .gov-brand-text {
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 2px;
   min-width: 0;
-}
-
-.gov-eyebrow {
-  font-family: var(--font-title);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
 }
 
 .gov-service-name {
@@ -241,7 +212,7 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--blue-france);
+  background: var(--brand-primary);
   color: #fff;
   font-family: var(--font-title);
   font-size: 0.9rem;
@@ -309,8 +280,8 @@ h1, h2, h3, h4 {
 }
 
 .nav-item.active {
-  background: var(--blue-france-tint);
-  color: var(--blue-france);
+  background: var(--brand-primary-tint);
+  color: var(--brand-primary);
 }
 
 .role-button-div {
@@ -454,29 +425,6 @@ h1, h2, h3, h4 {
   gap: 10px;
 }
 
-.standalone-mark {
-  width: 52px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--blue-france);
-  border-bottom: 3px solid var(--red-marianne);
-  color: #fff;
-  font-family: var(--font-title);
-  font-weight: 800;
-  font-size: 1.2rem;
-}
-
-.standalone-eyebrow {
-  font-family: var(--font-title);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
 .standalone-title {
   font-family: var(--font-title);
   font-size: 1.3rem;
@@ -502,5 +450,11 @@ h1, h2, h3, h4 {
   font-family: var(--font-title);
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--blue-france);
+  color: var(--brand-primary);
+}
+
+.standalone-disclaimer {
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  max-width: 420px;
 }
