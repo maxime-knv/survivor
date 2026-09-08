@@ -115,7 +115,7 @@ async function main() {
       id: 'txn-seed-2',
       label: 'Épicerie Sainte-Claire',
       partnerId: 'epicerie-sainte-claire',
-      amount: 480,
+      amount: -40,
       createdAt: new Date(now - 5 * 24 * 60 * 60000),
     },
     {
@@ -127,15 +127,15 @@ async function main() {
     },
     {
       id: 'txn-seed-4',
-      label: 'Pharmacie du Parc ',
-      partnerId: 'pharmacie-du-parc ',
+      label: 'Pharmacie du Parc',
+      partnerId: 'pharmacie-du-parc',
       amount: -45,
       createdAt: new Date(now - 10 * 24 * 60 * 60000),
     },
     {
       id: 'txn-seed-5',
       label: 'Transports Régionaux Unifiés',
-      partnerId: 'transports-régionaux-unifiés',
+      partnerId: 'transports-regionaux-unifies',
       amount: -28,
       createdAt: new Date(now - 13 * 24 * 60 * 60000),
     },
@@ -144,7 +144,13 @@ async function main() {
       label: 'Sport Loisirs Aubagne',
       partnerId: 'sport-loisirs-aubagne',
       amount: -28,
-      createdAt: new Date(now - 13 * 24 * 60 * 60000),
+      createdAt: new Date(now - 14 * 24 * 60 * 60000),
+    },
+    {
+      id: 'txn-seed-7',
+      label: 'Abondement employeur (Entreprise Démo)',
+      amount: 400,
+      createdAt: new Date(now - 15 * 24 * 60 * 60000),
     },
   ]
 
