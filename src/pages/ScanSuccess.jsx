@@ -17,15 +17,15 @@ export default function ScanSuccess() {
     return (
         <div className="standalone-page">
             <div className="standalone-header">
-                <div className="standalone-mark" aria-hidden="true">RF</div>
-                <span className="standalone-eyebrow">République Française</span>
-                <h1 className="standalone-title">CartePro — Ministère du Job et Bonheur</h1>
+                <h1 className="standalone-title">CartePro</h1>
             </div>
 
             <div className="standalone-card">
                 <CheckCircle2 size={32} strokeWidth={2} color="#18753c" aria-hidden="true" />
                 <p role="status">{message}</p>
             </div>
+
+            <p className="standalone-disclaimer">Démonstrateur technique, ne constitue pas un service public en exploitation.</p>
         </div>
     )
 }

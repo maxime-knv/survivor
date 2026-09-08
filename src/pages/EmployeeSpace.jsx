@@ -6,9 +6,7 @@ export default function EmployeeSpace() {
     return (
         <div className="standalone-page">
             <div className="standalone-header">
-                <div className="standalone-mark" aria-hidden="true">RF</div>
-                <span className="standalone-eyebrow">République Française</span>
-                <h1 className="standalone-title">CartePro — Mon espace salarié</h1>
+                <h1 className="standalone-title">Mon espace salarié</h1>
             </div>
 
             <div className="standalone-card">
@@ -18,6 +16,8 @@ export default function EmployeeSpace() {
                 </div>
                 <p className="standalone-amount">32,50 € à dépenser chez vos partenaires préférés !</p>
             </div>
+
+            <p className="standalone-disclaimer">Démonstrateur technique, ne constitue pas un service public en exploitation.</p>
         </div>
     )
 }

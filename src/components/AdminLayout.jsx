@@ -1,20 +1,14 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { House, QrCode, FolderOpen, Store, Activity, CircleHelp } from 'lucide-react'
-import { getCurrentUser } from '../services/userService'
-import { useAsync } from '../services/useAsync'
+import { LayoutDashboard, FileCheck2, Users, HandCoins } from 'lucide-react'
 
 const navigation = [
-    { to: '/accueil', label: 'Accueil', icon: House },
-    { to: '/qr-code', label: 'Code QR', icon: QrCode },
-    { to: '/mes-qr-codes', label: 'Mes QR codes', icon: FolderOpen },
-    { to: '/partenaires', label: 'Partenaires', icon: Store },
-    { to: '/historique', label: 'Historique', icon: Activity },
-    { to: '/aide', label: 'Aide', icon: CircleHelp },
+    { to: '/admin/tableau-de-bord', label: 'Tableau de bord national', icon: LayoutDashboard },
+    { to: '/admin/demandes-partenaires', label: 'Demandes partenaires', icon: FileCheck2 },
+    { to: '/admin/comptes', label: 'Comptes', icon: Users },
+    { to: '/admin/abondements', label: 'Abondements employeurs', icon: HandCoins },
 ]
 
-export default function Layout() {
-    const { data: currentUser } = useAsync(getCurrentUser, [])
-
+export default function AdminLayout() {
     return (
         <div className="app-shell">
             <a className="skip-link" href="#main-content">
@@ -25,27 +19,29 @@ export default function Layout() {
                 <div className="gov-header-inner">
                     <div className="gov-brand">
                         <div className="gov-brand-text">
-                            <span className="gov-service-name">CartePro</span>
+                            <span className="gov-service-name">
+                                CartePro
+                                <span className="gov-service-tag">Administration</span>
+                            </span>
                         </div>
                     </div>
 
                     <div className="gov-header-user">
                         <div className="profile-text">
-                            <div className="user-name">{currentUser ? `${currentUser.firstName} ${currentUser.lastName}` : '…'}</div>
-                            <div className="user-role">{currentUser ? `${currentUser.role}, ${currentUser.company}` : ''}</div>
+                            <div className="user-name">Jean-Eudes Berlier</div>
+                            <div className="user-role">Administrateur</div>
                         </div>
-                        <div className="avatar" aria-hidden="true">{currentUser?.avatarInitial ?? '?'}</div>
+                        <div className="avatar" aria-hidden="true">M</div>
                     </div>
                 </div>
 
-                <nav className="gov-nav" aria-label="Navigation principale">
+                <nav className="gov-nav" aria-label="Navigation de l’espace administration">
                     <div className="gov-nav-inner">
                         {navigation.map(({ to, label, icon: Icon }) => (
                             <NavLink
                                 key={to}
                                 to={to}
                                 className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
-                                end={to === '/accueil'}
                             >
                                 <span className="nav-icon">
                                     <Icon size={16} strokeWidth={2.2} />

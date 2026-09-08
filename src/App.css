@@ -170,14 +170,14 @@
 }
 
 .action-item:hover {
-  border-color: var(--blue-france);
-  background: var(--blue-france-tint);
+  border-color: var(--brand-primary);
+  background: var(--brand-primary-tint);
   text-decoration: none;
 }
 
 .action-icon {
   display: inline-flex;
-  color: var(--blue-france);
+  color: var(--brand-primary);
 }
 
 .two-col-layout {
@@ -247,8 +247,8 @@
 .offer-card-featured {
   margin-top: 18px;
   padding: 18px;
-  border-color: var(--blue-france);
-  background: var(--blue-france-tint);
+  border-color: var(--brand-primary);
+  background: var(--brand-primary-tint);
 }
 
 .offer-mark,
@@ -260,7 +260,7 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius);
-  background: var(--blue-france);
+  background: var(--brand-primary);
   color: #fff;
   font-family: var(--font-title);
   font-weight: 700;
@@ -383,12 +383,12 @@
 }
 
 .tab:hover {
-  color: var(--blue-france);
+  color: var(--brand-primary);
 }
 
 .tab.active {
-  border-bottom-color: var(--blue-france);
-  color: var(--blue-france);
+  border-bottom-color: var(--brand-primary);
+  color: var(--brand-primary);
   font-weight: 700;
 }
 
@@ -421,8 +421,8 @@
 }
 
 .bar.highlight {
-  background: var(--blue-france);
-  border-color: var(--blue-france);
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
 }
 
 .bar-group span {
@@ -500,8 +500,8 @@
 }
 
 .input-row:focus-within {
-  border-color: var(--blue-france);
-  box-shadow: 0 0 0 3px var(--blue-france-tint);
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 3px var(--brand-primary-tint);
 }
 
 .input-row input[type='number'] {
@@ -539,7 +539,7 @@
   gap: 8px;
   border: 1px solid transparent;
   border-radius: var(--radius);
-  background: var(--blue-france);
+  background: var(--brand-primary);
   color: #fff;
   font-family: var(--font-title);
   font-weight: 600;
@@ -548,11 +548,11 @@
 }
 
 .primary-btn:hover:not(:disabled) {
-  background: var(--blue-france-hover);
+  background: var(--brand-primary-hover);
 }
 
 .primary-btn:active:not(:disabled) {
-  background: var(--blue-france-active);
+  background: var(--brand-primary-active);
 }
 
 .large-btn {
@@ -565,7 +565,7 @@
   gap: 4px;
   border: none;
   background: transparent;
-  color: var(--blue-france);
+  color: var(--brand-primary);
   font-family: var(--font-title);
   font-size: 0.84rem;
   font-weight: 600;
@@ -588,7 +588,7 @@
   width: 20px;
   height: 20px;
   border: 2px solid var(--border);
-  border-top-color: var(--blue-france);
+  border-top-color: var(--brand-primary);
   border-radius: 50%;
   animation: gov-spin 0.7s linear infinite;
   flex-shrink: 0;
@@ -638,7 +638,7 @@
 }
 
 .qr-preview-thumb-clickable:hover {
-  border-color: var(--blue-france);
+  border-color: var(--brand-primary);
 }
 
 .qr-library-card .qr-preview-thumb {
@@ -799,8 +799,8 @@
 }
 
 .category-chip.active {
-  background: var(--blue-france);
-  border-color: var(--blue-france);
+  background: var(--brand-primary);
+  border-color: var(--brand-primary);
   color: #fff;
 }
 
@@ -891,8 +891,8 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius);
-  background: var(--blue-france-tint);
-  color: var(--blue-france);
+  background: var(--brand-primary-tint);
+  color: var(--brand-primary);
   margin-bottom: 14px;
 }
 
@@ -1034,8 +1034,8 @@
 }
 
 .download-btn:hover {
-  border-color: var(--blue-france);
-  color: var(--blue-france);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
 }
 
 /* ---------- Responsive ---------- */

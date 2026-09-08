@@ -3,6 +3,15 @@ import PageHeader from '../../components/ui/PageHeader';
 import { useState } from 'react';
 import { signIn } from '../../services/authService'
 
+// Redirection vers l'espace correspondant au rôle renvoyé par le backend
+// (server/src/routes/auth.js) : un salarié, un partenaire et un admin ne
+// voient pas la même interface après connexion.
+const HOME_BY_ROLE = {
+    EMPLOYEE: '/accueil',
+    PARTNER: '/partenaire/tableau-de-bord',
+    ADMIN: '/admin/tableau-de-bord',
+}
+
 const SignIn = () => {
     const navigate = useNavigate()
     const [email, setEmail] = useState('');
@@ -14,8 +23,8 @@ const SignIn = () => {
         setErrorMessage('');
 
         try {
-            await signIn({ email, password });
-            navigate('/accueil');
+            const user = await signIn({ email, password });
+            navigate(HOME_BY_ROLE[user.role] ?? '/accueil');
         } catch (error) {
             setErrorMessage(error.message || 'Impossible de se connecter.');
         }
@@ -26,13 +35,8 @@ const SignIn = () => {
             <header className="gov-header">
                 <div className="gov-header-inner">
                     <div className="gov-brand">
-                        <div className="marianne-mark" aria-hidden="true">RF</div>
                         <div className="gov-brand-text">
-                            <span className="gov-eyebrow">République Française</span>
-                            <span className="gov-service-name">
-                                CartePro
-                                <span className="gov-service-tag">Ministère du Job et Bonheur</span>
-                            </span>
+                            <span className="gov-service-name">CartePro</span>
                         </div>
                     </div>
                     <div>

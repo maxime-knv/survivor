@@ -67,13 +67,8 @@ const SignUp = () => {
             <header className="gov-header">
                 <div className="gov-header-inner">
                     <div className="gov-brand">
-                        <div className="marianne-mark" aria-hidden="true">RF</div>
                         <div className="gov-brand-text">
-                            <span className="gov-eyebrow">République Française</span>
-                            <span className="gov-service-name">
-                                CartePro
-                                <span className="gov-service-tag">Ministère du Job et Bonheur</span>
-                            </span>
+                            <span className="gov-service-name">CartePro</span>
                         </div>
                     </div>
                     <div>
