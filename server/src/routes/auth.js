@@ -2,8 +2,15 @@ import express from 'express'
 import bcrypt from 'bcryptjs'
 import { prisma } from '../lib/prisma.js'
 import { loginSchema } from '../lib/authSchemas.js'
+import { requireAuth } from '../middleware/requireAuth.js'
+import { clearSessionCookie, createSessionToken, setSessionCookie, readSessionToken, verifySessionToken } from '../lib/session.js'
 
 const router = express.Router()
+
+router.get('/session', requireAuth, (req, res) => {
+  const { id, email, firstName, lastName, company, role } = req.user
+  res.json({ id, email, firstName, lastName, company, role })
+})
 
 // POST /api/v1/auth/login
 router.post('/login', async (req, res) => {
@@ -20,6 +27,19 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ error: 'Email ou mot de passe incorrect.' })
   }
 
+  if (user.role === 'PARTNER' && user.status !== 'ACTIVE') {
+    return res.status(403).json({ error: user.status === 'REJECTED' ? 'Votre demande partenaire a été refusée.' : 'Votre compte partenaire est en attente de validation administrative.' })
+  }
+
+  if (user.status === 'SUSPENDED') {
+    return res.status(403).json({ error: 'Ce compte est suspendu.' })
+  }
+
+  const token = createSessionToken(user)
+  const session = verifySessionToken(token)
+  await prisma.session.create({ data: { id: session.sid, userId: user.id, expiresAt: new Date(session.exp * 1000) } })
+  setSessionCookie(res, token)
+
   return res.json({
     id: user.id,
     email: user.email,
@@ -28,6 +48,14 @@ router.post('/login', async (req, res) => {
     company: user.company,
     role: user.role,
   })
+})
+
+// POST /api/v1/auth/logout
+router.post('/logout', async (req, res) => {
+  const session = verifySessionToken(readSessionToken(req))
+  if (session) await prisma.session.deleteMany({ where: { id: session.sid } })
+  clearSessionCookie(res)
+  res.status(204).send()
 })
 
 export default router

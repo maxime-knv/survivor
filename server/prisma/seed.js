@@ -101,6 +101,17 @@ async function main() {
     },
   })
 
+  console.log('Seed : administrateur de démo...')
+  await prisma.user.upsert({
+    where: { email: 'admin@demo.ticket-tout.fr' },
+    update: { password: demoPasswordHash, role: 'ADMIN', status: 'ACTIVE' },
+    create: {
+      email: 'admin@demo.ticket-tout.fr', password: demoPasswordHash,
+      firstName: 'Admin', lastName: 'CartePro', company: 'Ministère du Job et Bonheur',
+      role: 'ADMIN', status: 'ACTIVE',
+    },
+  })
+
   console.log('Seed : transactions...')
   const now = Date.now()
   const demoTransactions = [

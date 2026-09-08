@@ -22,7 +22,9 @@ model Partner {
   description String?
   featured    Boolean          @default(false)
   archived    Boolean?         @default(false)
+  ownerId     String?          @unique
   Category    PartnerCategory? @relation(fields: [categoryId], references: [id])
+  Owner       User?            @relation("PartnerOwner", fields: [ownerId], references: [id])
   Transaction Transaction[]
 }
 
@@ -45,7 +47,9 @@ model Transaction {
   status    String   @default("SUCCESS")
   userId    String
   partnerId String?
-  qrCodeId  String?
+  qrCodeId  String?  @unique
+  redeemedByUserId String?
+  RedeemedBy User? @relation("RedeemedPayments", fields: [redeemedByUserId], references: [id])
   createdAt DateTime @default(now())
   label     String   @default("Transaction")
   ARCHIVED  Boolean?
@@ -67,6 +71,43 @@ model User {
   monthlySpend  Float         @default(0)
   password      String        @default("")
   status        String?
+  PartnerApplication PartnerApplication?
+  OwnedPartner  Partner?       @relation("PartnerOwner")
+  Sessions      Session[]
+  RedeemedPayments Transaction[] @relation("RedeemedPayments")
   QrCode        QrCode[]
   Transaction   Transaction[]
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model PaymentAudit {
+  id            String   @id @default(cuid())
+  transactionId String   @unique
+  qrCodeId      String
+  actorId       String
+  createdAt     DateTime @default(now())
+  amount        Decimal  @db.Decimal(10, 2)
+}
+
+model PartnerApplication {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  companyName String
+  siret       String   @unique
+  objetSocial String
+  categoryId  String
+  city        String
+  phone       String
+  status      String   @default("PENDING")
+  submittedAt DateTime @default(now())
+  decidedAt   DateTime?
+  decidedBy   String?
+  motif       String?
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
