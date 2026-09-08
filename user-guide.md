@@ -1,6 +1,6 @@
 # Guide d'utilisation — Démonstration sur tablette
 
-Ce guide décrit, étape par étape, comment faire une démonstration de Ticket Tout sur une tablette. Il ne décrit que ce qui fonctionne réellement dans l'application aujourd'hui.
+Ce guide décrit, étape par étape, comment faire une démonstration de CartePro sur une tablette. Il ne décrit que ce qui fonctionne réellement dans l'application aujourd'hui.
 
 ## Avant de commencer
 

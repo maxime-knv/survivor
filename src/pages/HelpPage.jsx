@@ -6,7 +6,7 @@ const helpTopics = [
     icon: ShieldCheck,
     tag: 'Sécurité des cartes',
     title: 'Comment contester une transaction inconnue sur votre carte',
-    description: 'Verrouillez instantanément votre carte Ticket Tout et déposez une réclamation en quelques minutes.',
+    description: 'Verrouillez instantanément votre carte CartePro et déposez une réclamation en quelques minutes.',
   },
   {
     icon: Wallet,

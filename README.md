@@ -1,14 +1,14 @@
-# Ticket Tout
+# CartePro
 
 ## Bienvenue
 
-Ticket Tout est une application qui permet de gérer et d'utiliser des titres
+CartePro est une application qui permet de gérer et d'utiliser des titres
 restaurant dématérialisés grâce à des QR codes.
 
 L'application propose un espace adapté à chaque type d'utilisateur : salarié,
 partenaire ou utilisateur disposant uniquement de l'accès à l'accueil.
 
-## Que peut-on faire avec Ticket Tout ?
+## Que peut-on faire avec CartePro ?
 
 ### Salarié
 
@@ -32,7 +32,7 @@ Certains utilisateurs disposent uniquement de la page d'accueil.
 
 ## Utiliser l'application
 
-1. Ouvrez Ticket Tout.
+1. Ouvrez CartePro.
 2. Créez un compte avec **Inscription** ou connectez-vous avec **Connexion**.
 3. Une fois connecté, utilisez le menu de navigation pour ouvrir les pages
 	auxquelles votre profil a accès.
@@ -43,7 +43,7 @@ Certains utilisateurs disposent uniquement de la page d'accueil.
 
 ## Lancer l'application
 
-Pour démarrer Ticket Tout sur votre ordinateur, ouvrez un terminal à la racine
+Pour démarrer CartePro sur votre ordinateur, ouvrez un terminal à la racine
 du projet et exécutez :
 
 ```bash

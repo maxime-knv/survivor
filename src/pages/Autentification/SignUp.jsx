@@ -74,7 +74,7 @@ const SignUp = () => {
                         <div className="gov-brand-text">
                             <span className="gov-eyebrow">République Française</span>
                             <span className="gov-service-name">
-                                Ticket Tout
+                                CartePro
                                 <span className="gov-service-tag">Ministère du Job et Bonheur</span>
                             </span>
                         </div>
