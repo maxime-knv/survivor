@@ -1,7 +1,7 @@
 // Règle métier confirmée par le cabinet : un QR CartePro est à usage unique,
 // signé "côté serveur" (simulé ici), valide 30 minutes : jamais un montant
 // rechargeable ou réutilisable après expiration.
-export const QR_VALIDITY_MINUTES = 30
+export const QR_VALIDITY_MINUTES = 5
 
 export function getExpiryDate(generatedAtIso) {
   return new Date(new Date(generatedAtIso).getTime() + QR_VALIDITY_MINUTES * 60000)

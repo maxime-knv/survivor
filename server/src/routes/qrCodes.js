@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
       error: 'Libellé trop long',
     })
   }
-  const expiresAt = new Date(Date.now() + 30 * 60 *1000)
+  const expiresAt = new Date(Date.now() + 5 * 60 *1000)
   const qrCode = await prisma.qrCode.create({
     data: {
       id: crypto.randomUUID(),
