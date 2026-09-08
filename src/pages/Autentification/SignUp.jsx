@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import PageHeader from '../../components/ui/PageHeader'
 import { useState } from 'react';
-import { neon } from '../../lib/neon';
 import { createUser } from '../../services/userService';
 
 const SignUp = () => {
@@ -35,6 +34,10 @@ const SignUp = () => {
             setErrorMessage('Veuillez sélectionner un profil.');
             return;
         }
+        if (password.length < 8) {
+            setErrorMessage('Le mot de passe doit contenir au moins 8 caractères.');
+            return;
+        }
         if (password !== confirmPassword) {
             setErrorMessage('Les mots de passe ne correspondent pas.');
             return;
@@ -44,15 +47,9 @@ const SignUp = () => {
             return;
         }
         try {
-            // call neon auth
-            await neon.auth.signUp.email({
-                name: `${firstName.trim()} ${lastName.trim()}`,
-                email: email.trim(),
-                password,
-            });
-            // call neon db
             await createUser({
                 email,
+                password,
                 firstName,
                 lastName,
                 company: entreprise,

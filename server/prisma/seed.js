@@ -4,6 +4,7 @@
 //
 // Utilisation : npm run db:seed (depuis server/)
 import { PrismaClient } from '@prisma/client'
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient()
 
@@ -81,11 +82,14 @@ async function main() {
   }
 
   console.log('Seed : utilisateur de démo...')
+  // Mot de passe de démo, en clair uniquement ici (seed) : "Demo1234!"
+  const demoPasswordHash = await bcrypt.hash('Demo1234!', 10)
   const user = await prisma.user.upsert({
     where: { email: 'alex.martin@demo.ticket-tout.fr' },
-    update: {},
+    update: { password: demoPasswordHash },
     create: {
       email: 'alex.martin@demo.ticket-tout.fr',
+      password: demoPasswordHash,
       firstName: 'Alex',
       lastName: 'Martin',
       company: 'Entreprise Démo',
