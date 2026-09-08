@@ -5,10 +5,11 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node test/payment.integration.mjs",
     "postinstall": "prisma skills sync || exit 0",
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
+    "db:setup": "prisma db execute --schema prisma/schema.prisma --file prisma/upgrade.sql && prisma db execute --schema prisma/schema.prisma --file prisma/integrity.sql && prisma generate",
     "db:seed": "node prisma/seed.js"
   },
   "keywords": [],

@@ -43,21 +43,21 @@ export default function QrLibraryPage() {
       ) : (
         <section className="qr-library-grid">
           {qrCodes.map((entry) => {
-            const valid = isQrValid(entry.createdAt)
-            const expiresAt = getExpiryDate(entry.createdAt)
+            const valid = entry.status === 'ACTIVE' && isQrValid(entry.createdAt)
+            const expiresAt = new Date(entry.expiresAt)
             const title = entry.label || formatCurrency(entry.amount)
 
             return (
               <article key={entry.id} className="panel qr-library-card">
                 <div className="qr-library-top">
                   <span className={`status-pill ${valid ? 'success' : 'failed'}`}>
-                    {valid ? 'Valide' : 'Expiré'}
+                    {valid ? 'Valide' : entry.status === 'USED' ? 'Utilisé' : entry.status === 'CANCELLED' ? 'Annulé' : 'Expiré'}
                   </span>
                   <span className="qr-library-date">{formatGeneratedDate(entry.createdAt)}</span>
                 </div>
 
                 <QrPreview
-                  id={entry.id}
+                  id={entry.token}
                   alt={`${title}, ${formatCurrency(entry.amount)}`}
                   size={120}
                   onClick={() => setExpandedId(entry.id)}
@@ -66,7 +66,7 @@ export default function QrLibraryPage() {
                 <div className="qr-library-amount">{formatCurrency(entry.amount)}</div>
                 <div className="qr-library-label">{entry.label || 'Sans libellé'}</div>
                 <div className="qr-library-expiry">
-                  {valid ? `Valide jusqu’à ${formatTime(expiresAt)}` : `Expiré à ${formatTime(expiresAt)}`}
+                  {valid ? `Valide jusqu’à ${formatTime(expiresAt)}` : 'Ce code ne peut plus servir à un paiement.'}
                 </div>
 
                 <button type="button" className="download-btn" onClick={() => downloadQrImage(entry)}>
@@ -80,10 +80,10 @@ export default function QrLibraryPage() {
 
       {expandedEntry ? (
         <QrLightbox
-          id={expandedEntry.id}
+          id={expandedEntry.token}
           title={expandedEntry.label || 'Code QR CartePro'}
           caption={`${formatCurrency(expandedEntry.amount)}, ${
-            isQrValid(expandedEntry.createdAt)
+            expandedEntry.status === 'ACTIVE' && isQrValid(expandedEntry.createdAt)
               ? `valide jusqu’à ${formatTime(getExpiryDate(expandedEntry.createdAt))}`
               : 'expiré'
           }`}

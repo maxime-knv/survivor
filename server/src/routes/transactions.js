@@ -1,12 +1,12 @@
 import express from 'express'
 import { prisma } from '../lib/prisma.js'
-import { resolveUser } from '../middleware/resolveUser.js'
+import { requireAuth, requireRole } from '../middleware/requireAuth.js'
 
 const router = express.Router()
 
 // GET /api/v1/transactions
 // Historique de l'utilisateur courant, le plus récent en premier.
-router.get('/', resolveUser, async (req, res) => {
+router.get('/', requireAuth, requireRole('EMPLOYEE'), async (req, res) => {
   const transactions = await prisma.transaction.findMany({
     where: { userId: req.user.id },
     include: { Partner: true },

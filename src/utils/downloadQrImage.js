@@ -2,7 +2,7 @@ import QRCode from 'qrcode'
 
 export async function downloadQrImage(entry) {
   try {
-    const dataUrl = await QRCode.toDataURL(entry.id)
+    const dataUrl = await QRCode.toDataURL(entry.token)
 
     const link = document.createElement('a')
     link.href = dataUrl

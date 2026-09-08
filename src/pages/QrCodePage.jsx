@@ -21,6 +21,7 @@ export default function QrCodePage() {
   const [lastGenerated, setLastGenerated] = useState(null)
   const [isExpanded, setIsExpanded] = useState(false)
   const [isGenerating, setIsGenerating] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   if (accountLoading || !account) {
     return (
@@ -46,6 +47,7 @@ export default function QrCodePage() {
     event.preventDefault()
     if (!canGenerate) return
     setIsGenerating(true)
+    setSubmitError('')
     try {
       const qrCode = await createQrCode({
         amount: numericAmount,
@@ -53,7 +55,7 @@ export default function QrCodePage() {
       })
       setLastGenerated(qrCode)
     } catch (error) {
-      console.error('Erreur lors de la génération du QR code :', error)
+      setSubmitError(error.message)
     } finally {
       setIsGenerating(false)
     }
@@ -76,6 +78,7 @@ export default function QrCodePage() {
       <div className="create-layout">
         <form className="panel form-panel" onSubmit={handleGenerate}>
           <h2>Détails du code QR</h2>
+          {submitError && <p role="alert" className="field-error">{submitError}</p>}
 
           <label className="form-group" htmlFor="qr-amount">
             <span>Montant</span>
@@ -131,13 +134,15 @@ export default function QrCodePage() {
             <>
               <div className="qr-preview-large">
                 <QrPreview
-                  id={lastGenerated.id}
+                  id={lastGenerated.token}
                   alt={`Code QR de paiement pour ${formatCurrency(lastGenerated.amount)}`}
                   size={240}
                   onClick={() => setIsExpanded(true)}
                 />
               </div>
               <div className="preview-amount">{formatCurrency(lastGenerated.amount)}</div>
+              <label htmlFor="signed-payment">Code pour saisie manuelle chez le partenaire</label>
+              <textarea id="signed-payment" readOnly value={lastGenerated.token} rows={3} style={{ width: '100%' }} onFocus={event => event.target.select()} />
               {lastGenerated.label ? <div className="preview-caption">{lastGenerated.label}</div> : null}
               <div className="preview-caption">
                 Valide jusqu’à {formatTime(expiresAt)} ({QR_VALIDITY_MINUTES} minutes), usage unique
@@ -158,7 +163,7 @@ export default function QrCodePage() {
 
       {isExpanded && lastGenerated ? (
         <QrLightbox
-          id={lastGenerated.id}
+          id={lastGenerated.token}
           title={lastGenerated.label || 'Code QR CartePro'}
           caption={`${formatCurrency(lastGenerated.amount)}, ${
             isQrValid(lastGenerated.createdAt)

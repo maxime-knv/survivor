@@ -1,0 +1,25 @@
+-- Mise à niveau additive du schéma existant. Aucune suppression de données.
+BEGIN;
+ALTER TABLE "Partner" ADD COLUMN IF NOT EXISTS "ownerId" TEXT REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Transaction" ADD COLUMN IF NOT EXISTS "redeemedByUserId" TEXT REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+CREATE TABLE IF NOT EXISTS "Session" (
+  "id" TEXT PRIMARY KEY, "userId" TEXT NOT NULL REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+  "expiresAt" TIMESTAMP(3) NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "PaymentAudit" (
+  "id" TEXT PRIMARY KEY, "transactionId" TEXT NOT NULL UNIQUE,
+  "qrCodeId" TEXT NOT NULL, "actorId" TEXT NOT NULL,
+  "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "amount" DECIMAL(10,2) NOT NULL
+);
+CREATE TABLE IF NOT EXISTS "PartnerApplication" (
+  "id" TEXT PRIMARY KEY, "userId" TEXT NOT NULL UNIQUE REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE,
+  "companyName" TEXT NOT NULL, "siret" TEXT NOT NULL UNIQUE,
+  "objetSocial" TEXT NOT NULL, "categoryId" TEXT NOT NULL,
+  "city" TEXT NOT NULL, "phone" TEXT NOT NULL,
+  "status" TEXT NOT NULL DEFAULT 'PENDING', "submittedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  "decidedAt" TIMESTAMP(3), "decidedBy" TEXT, "motif" TEXT
+);
+CREATE UNIQUE INDEX IF NOT EXISTS "Partner_ownerId_key" ON "Partner"("ownerId");
+CREATE UNIQUE INDEX IF NOT EXISTS "Transaction_qrCodeId_key" ON "Transaction"("qrCodeId");
+COMMIT;
